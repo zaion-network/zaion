@@ -1,0 +1,9 @@
+{
+  // this configuration is the same in the tsconfig.app.json
+  // and in the ink.tsconfig.json file
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  }
+}
