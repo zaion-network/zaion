@@ -1,0 +1,11 @@
+{
+  "name": "@zaion/nostro-mercatino",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://giacomogagliano@github.com/ariannatnl/nostro-mercatino.git",
+  "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webln": "0.3.2"
+  }
+}
