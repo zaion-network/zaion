@@ -1,0 +1,64 @@
+import { Attributes } from "./Attributes";
+import { Tracks as T } from "./Tracks";
+
+export interface LiveSet {
+  NextPointeeId: Attributes.Value;
+  OverwriteProtectionNumber: Attributes.Value;
+  LomId: Attributes.Value;
+  LomIdView: Attributes.Value;
+  Tracks: LiveSet.Tracks;
+  MasterTrack: any;
+  PreHearTrack: unknown;
+  SendsPre: unknown;
+  SceneNames: unknown;
+  Transport: unknown;
+  SongMasterValues: unknown;
+  GlobalQuantisation: unknown;
+  AutoQuantisation: unknown;
+  Grid: unknown;
+  ScaleInformation: unknown;
+  SmpteFormat: unknown;
+  TimeSelection: unknown;
+  SequencerNavigator: unknown;
+  ViewStateLaunchPanel: unknown;
+  ViewStateEnvelopePanel: unknown;
+  ViewStateSamplePanel: unknown;
+  ContentSplitterProperties: unknown;
+  ViewStateFxSlotCount: unknown;
+  ViewStateSessionMixerHeight: unknown;
+  Locators: unknown;
+  DetailClipKeyMidis: unknown;
+  TracksListWrapper: unknown;
+  VisibleTracksListWrapper: unknown;
+  ReturnTracksListWrapper: unknown;
+  ScenesListWrapper: unknown;
+  CuePointsListWrapper: unknown;
+  ChooserBar: unknown;
+  Annotation: unknown;
+  SoloOrPflSavedValue: unknown;
+  SoloInPlace: unknown;
+  CrossfadeCurve: unknown;
+  LatencyCompensation: unknown;
+  HighlightedTrackIndex: unknown;
+  GroovePool: unknown;
+  AutomationMode: unknown;
+  SnapAutomationToGrid: unknown;
+  ArrangementOverdub: unknown;
+  ColorSequenceIndex: unknown;
+  AutoColorPickerForPlayerAndGroupTracks: unknown;
+  AutoColorPickerForReturnAndMasterTracks: unknown;
+  ViewData: unknown;
+  MidiFoldIn: unknown;
+  MidiPrelisten: unknown;
+  UseWarperLegacyHiQMode: unknown;
+  VideoWindowRect: unknown;
+  ShowVideoWindow: unknown;
+  TrackHeaderWidth: unknown;
+  ViewStateArrangerHasDetail: unknown;
+  ViewStateSessionHasDetail: unknown;
+  ViewStateDetailIsSample: unknown;
+  ViewStates: unknown;
+}
+export namespace LiveSet {
+  export import Tracks = T;
+}

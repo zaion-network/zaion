@@ -1,0 +1,7 @@
+- retrieve all samples paths from one project
+- retrieve all samples paths from all projects in folder
+- retrieve if all samples exist
+- create cache database for foundsamples
+- create mechanism to check against for file changes:
+  only files which have changed shall be retested for file
+  existance
