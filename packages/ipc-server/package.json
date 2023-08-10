@@ -1,0 +1,7 @@
+{
+  "name": "@zaionstate/ipc-server",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
+  "license": "MIT"
+}
