@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zaionstate/ipc-server": "^0.0.0",
+    "@zaionstate/zaionbase": "^0.0.1",
     "fast-xml-parser": "4.2.7",
     "zlib": "1.0.5"
   },

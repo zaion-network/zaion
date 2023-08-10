@@ -1,14 +1,10 @@
-import { Cache } from "./IPC Server/Cache";
+import { Cache } from "@zaionstate/ipc-server";
 import { Sample } from "./Types/AbletonProjectParser/Sample";
 import { AbletonXml } from "./Types/AbletonXml";
 import { ArrangerAutomation } from "./Types/ArrangerAutomation";
-import { Value } from "./Types/Attributes";
+import { Attributes } from "./Types/Attributes";
 import { AudioClip, Clip, ClipSlotList } from "./Types/Clip";
-import {
-  AudioDeviceChain,
-  GroupDeviceChain,
-  MidiDeviceChain,
-} from "./Types/DeviceChain";
+import { DeviceChain } from "./Types/DeviceChain";
 import { Events } from "./Types/Events";
 import { LiveSet } from "./Types/LiveSet";
 import { MainSequencer } from "./Types/MainSequencer";
@@ -51,9 +47,9 @@ export interface AlsParser {
     ignoreAttributes: boolean;
   };
   trackDeviceChain:
-    | AudioDeviceChain
-    | MidiDeviceChain
-    | GroupDeviceChain
+    | DeviceChain.AudioDeviceChain
+    | DeviceChain.MidiDeviceChain
+    | DeviceChain.GroupDeviceChain
     | undefined;
   mainSequencer: MainSequencer | undefined;
   clipSlotList: ClipSlotList | undefined;
@@ -62,7 +58,7 @@ export interface AlsParser {
   events: Events | undefined | string;
   tracksStatuses:
     | {
-        isFreezed: Value;
+        isFreezed: Attributes.Value;
         hasClipsInSlots: any;
         hasEventsInArrangement: boolean | undefined;
       }[]
@@ -143,7 +139,7 @@ export interface AlsParserContext {
     miditrack: MidiTrack | AudioTrack,
     type?: any
   ): {
-    isFreezed: Value;
+    isFreezed: Attributes.Value;
     hasClipsInSlots: boolean;
     hasEventsInArrangement: boolean | undefined;
   };

@@ -26,8 +26,8 @@ import { MultiSampler } from "./Types/Instruments/MultiSampler";
 import { OriginalSimpler } from "./Types/Instruments/Simpler";
 import { InstrumentVector } from "./Types/Instruments/Wavetable";
 import { InstrumentGroupDevice } from "./Types/Instruments/InstrumentRack";
-import { Cache } from "./IPC Server/Cache";
-import { HigherUtilities as Utilities } from "./class/using DeeperUtilities/using DeepUtilites/using LowUtilities/using Utilities/using HighUtilities/HigherUtilites";
+import { Cache } from "@zaionstate/ipc-server";
+import { HigherUtilities as Utilities } from "@zaionstate/zaionbase";
 
 const ensureArray = Utilities.JavaScript.ArrayUtils.ensureArray;
 
