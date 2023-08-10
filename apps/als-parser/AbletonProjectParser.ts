@@ -11,9 +11,7 @@ import { AlsParser } from "./AlsParser";
 import { AlsBuilder } from "./AlsBuilder";
 import { Renamer } from "./Renamer";
 import { NameAnalyzer } from "./NameAnalyzer";
-import { Update } from "./class/using DeeperUtilities/using DeepUtilites/using LowUtilities/using Utilities/using HighUtilities/using HigherUtilities/Node/oldHasUpdated/HasUpdated/Update";
-import { Scan } from "./class/using DeeperUtilities/using DeepUtilites/using LowUtilities/using Utilities/using HighUtilities/using HigherUtilities/Node/oldHasUpdated/HasUpdated/Scan";
-import { TopUtilities as Utilities } from "./class/using DeeperUtilities/using DeepUtilites/using LowUtilities/using Utilities/using HighUtilities/using HigherUtilities/TopUtilities";
+import { Update, Scan, TopUtilities as Utilities } from "@zaionstate/zaionbase";
 
 const config = {
   rootpath: `/Users/WAW/Desktop/Als\ Analyzer\ Project`,
