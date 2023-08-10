@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+}
+
+.key-value {
+  display: flex;
+
+  >div {
+    margin-right: 10px;
+  }
+
+  >div:last-child {
+    margin-right: 0px;
+  }
+}
+
+.array {
+  display: flex;
+
+  >.node>.object {
+    >.key {
+      display: none;
+    }
+  }
+}
+
+.node:last-child {
+  .object:last-child {
+    border-bottom: 1px solid;
+  }
+}
+
+.object {
+  display: flex;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  margin-bottom: 3px;
+}
