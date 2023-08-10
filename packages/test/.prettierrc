@@ -1,0 +1,5 @@
+{
+  "printWidth": 59,
+  "arrowParens": "avoid",
+  "singleAttributePerLine": false
+}
