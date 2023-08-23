@@ -1,4 +1,6 @@
 {
-  "folders": [{ "path": "." }, { "path": "apps" }],
-  "settings": {}
+  "folders": [{ "path": "." }, { "path": "apps" }, { "path": "packages" }],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "zaion-network-state"
+  }
 }
