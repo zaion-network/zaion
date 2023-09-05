@@ -1,6 +1,6 @@
-import { Product } from "../js/Product.js";
+import { Product } from "../Product.js";
 
-const motoscafoTelecomandato = new Product({
+const motoscafoTelecomandatoData = {
   dataTag: "elettronica",
   src: `https://ipfs.io/ipfs/QmTGX3ZTRaxXJUZGqUC8aHYvdJXc5XAWFGSucnfhPVeY2G?filename=Motoscafo.jpeg`,
   title: "Motoscafo Telecomandato Ricaricabile ",
@@ -12,8 +12,8 @@ const motoscafoTelecomandato = new Product({
     `#ricaricabile`,
     `#divertimento`,
   ],
-});
-const magliaRaso = new Product({
+};
+const magliaRasoData = {
   dataTag: "vestiti",
   src: `https://ipfs.io/ipfs/QmTfMy9ngXqd41YzUkYFGNMXGVDw3NLJzPcnGDVravgjhJ?filename=MagliettaRaso.JPG`,
   title: "Maglietta Raso ",
@@ -25,8 +25,8 @@ const magliaRaso = new Product({
     `#ottime-rifiniture`,
     `#tagliaS`,
   ],
-});
-const giaccaJeans = new Product({
+};
+const giaccaJeansData = {
   dataTag: "vestiti",
   src: `https://ipfs.io/ipfs/QmR5wuJ5a5uGCYVrXXp16pQJPNvghVumTUq1DYyK5cVXi6?filename=GiaccaJeansM.JPG`,
   title: "Giacchetto di Jeans ",
@@ -38,8 +38,8 @@ const giaccaJeans = new Product({
     `#ottimo-tessuto`,
     `#tagliaM`,
   ],
-});
-const vestitoTezenis = new Product({
+};
+const vestitoTezenisData = {
   dataTag: "vestiti",
   src: `https://ipfs.io/ipfs/Qmb6ra4dHvQbLvb3grub48jtLDXBBSc4N3vL9ki2CM6GTA?filename=TezenisVestitoGiallo.JPG`,
   title: "Vestito Tezenis ",
@@ -51,8 +51,8 @@ const vestitoTezenis = new Product({
     `#ottime-rifiniture`,
     `#tagliaS`,
   ],
-});
-const gonnaArmani = new Product({
+};
+const gonnaArmaniData = {
   dataTag: "vestiti",
   src: `https://ipfs.io/ipfs/QmbsnKttsWrSHERzbZ51e3Cp2xDBzXDYEHMcXG4HvfUzax?filename=ArmaniGonna46.JPG`,
   title: "Gonna - Giorgio Armani ",
@@ -64,52 +64,103 @@ const gonnaArmani = new Product({
     `#ottime-rifiniture`,
     `#taglia46`,
   ],
-});
-const soundSys = new Product({
+};
+const soundSysData = {
   dataTag: "soundsystem",
   src: ``,
   title: "SOUNDSYSTEM",
   description: `Vendo causa trasloco sedia Vintage super ricercata, usata
   pochissimo. Paglia non rovinata, puzza un pò perchè era in
   cantina, c'è un po di umidità. Spedizione esclusa.`,
-  tags: [`#comodissima`, `#poco-usata`, `#1970`, `#ottime-rifiniture`],
-});
-const viaggi = new Product({
+  tags: [
+    `#comodissima`,
+    `#poco-usata`,
+    `#1970`,
+    `#ottime-rifiniture`,
+  ],
+};
+const viaggiData = {
   dataTag: "viaggiare",
   src: ``,
   title: "Viaggi a piu non posso  ",
   description: `Vendo causa trasloco sedia Vintage super ricercata, usata
   pochissimo. Paglia non rovinata, puzza un pò perchè era in
   cantina, c'è un po di umidità. Spedizione esclusa.`,
-  tags: [`#comodissima`, `#poco-usata`, `#1970`, `#ottime-rifiniture`],
-});
-const viniliUsati = new Product({
+  tags: [
+    `#comodissima`,
+    `#poco-usata`,
+    `#1970`,
+    `#ottime-rifiniture`,
+  ],
+};
+const viniliUsatiData = {
   dataTag: "musica",
   src: ``,
   title: "Vinili Usati x dj ",
   description: `Vendo causa trasloco sedia Vintage super ricercata, usata
   pochissimo. Paglia non rovinata, puzza un pò perchè era in
   cantina, c'è un po di umidità. Spedizione esclusa.`,
-  tags: [`#comodissima`, `#poco-usata`, `#1970`, `#ottime-rifiniture`],
-});
-const sedia = new Product({
+  tags: [
+    `#comodissima`,
+    `#poco-usata`,
+    `#1970`,
+    `#ottime-rifiniture`,
+  ],
+};
+const sediaData = {
   dataTag: "mobili",
   src: `https://ipfs.io/ipfs/QmVtvHzsdXbsKCaXGP7WkUj9b5XYDdg5K4LWjhyaZa4Jyx?filename=graffiti-chair.jpg`,
   title: "Sedia Vintage",
   description: `Vendo causa trasloco sedia Vintage super ricercata, usata
   pochissimo. Paglia non rovinata, puzza un pò perchè era in
   cantina, c'è un po di umidità. Spedizione esclusa.`,
-  tags: [`#comodissima`, `#poco-usata`, `#1970`, `#ottime-rifiniture`],
-});
-const foto = new Product({
+  tags: [
+    `#comodissima`,
+    `#poco-usata`,
+    `#1970`,
+    `#ottime-rifiniture`,
+  ],
+};
+const fotoData = {
   dataTag: "mobili",
   src: `https://ipfs.io/ipfs/QmaHmnyKGenoP3HtY37hfCxzS6awqMzAjGtAv5HTx3jdvS?filename=Group-1601.jpg`,
   title: "Foto Vintage",
   description: ` Vendo causa trasloco foto Vintage super ricercata, usata
   pochissimo. Non rovinata, molto interessante, puzza un pò perchè
   era in cantina, c'è un po di umidità. Spedizione esclusa.`,
-  tags: [`#bellisma`, `#molto-vecchi`, `#1901`, `#ottimo-quadretto`],
-});
+  tags: [
+    `#bellisma`,
+    `#molto-vecchi`,
+    `#1901`,
+    `#ottimo-quadretto`,
+  ],
+};
+
+export const prodottiArray = [
+  motoscafoTelecomandatoData,
+  magliaRasoData,
+  giaccaJeansData,
+  vestitoTezenisData,
+  gonnaArmaniData,
+  soundSysData,
+  viaggiData,
+  viniliUsatiData,
+  sediaData,
+  fotoData,
+];
+
+const motoscafoTelecomandato = new Product(
+  motoscafoTelecomandatoData
+);
+const magliaRaso = new Product(magliaRasoData);
+const giaccaJeans = new Product(giaccaJeansData);
+const vestitoTezenis = new Product(vestitoTezenisData);
+const gonnaArmani = new Product(gonnaArmaniData);
+const soundSys = new Product(soundSysData);
+const viaggi = new Product(viaggiData);
+const viniliUsati = new Product(viniliUsatiData);
+const sedia = new Product(sediaData);
+const foto = new Product(fotoData);
 
 export const prodotti = {
   soundSys,

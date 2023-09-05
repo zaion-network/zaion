@@ -1,16 +1,8 @@
-import { UIDesign, Node } from "./Dom.js";
+import { UIDesign } from "@zaionstate/ui";
 
-export interface iProduct {
-  src: string;
-  dataTag: string;
-  tags: string[];
-  title: string;
-  description: string;
-  alt?: string;
-}
-export class Product implements Node<iProduct> {
-  value: iProduct;
-  constructor(prop: iProduct) {
+export class Product {
+  value;
+  constructor(prop) {
     this.value = prop;
   }
   get tree() {
@@ -19,16 +11,14 @@ export class Product implements Node<iProduct> {
   get element() {
     return Product.createProduct(this.value).element;
   }
-}
-export namespace Product {
-  export const createProduct = ({
+  static createProduct = ({
     dataTag,
     tags,
     title: t,
     description: d,
     alt,
     src,
-  }: iProduct) => {
+  }) => {
     const product_ = new UIDesign({
       tag: "div",
       id: "product",

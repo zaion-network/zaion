@@ -1,8 +1,7 @@
-import { UIDesign, Node } from "./Dom.js";
+import { UIDesign } from "@zaionstate/ui";
 
-export interface iPopUpLogIn {}
-export class PopUpLogIn implements Node<iPopUpLogIn> {
-  constructor(public value: iPopUpLogIn) {}
+export class PopUpLogIn {
+  constructor(value) {}
 
   get tree() {
     return PopUpLogIn.createpopupLogIn();
@@ -10,9 +9,7 @@ export class PopUpLogIn implements Node<iPopUpLogIn> {
   get element() {
     return PopUpLogIn.createpopupLogIn().element;
   }
-}
-export namespace PopUpLogIn {
-  export const createpopupLogIn = () => {
+  createpopupLogIn = () => {
     const closeIcon = new UIDesign({
       tag: "div",
       id: "close-icon",

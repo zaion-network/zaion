@@ -1,10 +1,8 @@
-import { UIDesign, Node } from "./Dom.js";
+import { UIDesign } from "@zaionstate/ui";
 
-export interface iTestata {}
-
-export class Testata implements Node<iTestata> {
-  value: iTestata;
-  constructor(prop: iTestata) {
+export class Testata {
+  value;
+  constructor(prop) {
     this.value = prop;
   }
   get tree() {
@@ -13,29 +11,26 @@ export class Testata implements Node<iTestata> {
   get element() {
     return Testata.createTestata(this.value).element;
   }
-}
-
-export namespace Testata {
-  export const createTestata = (prop?: iTestata) => {
+  static createTestata = ({ classes }) => {
     const header = new UIDesign({
       tag: "header",
       id: "header",
-      className: "bg_t flex",
+      className: classes.header,
     });
     const weblnBtn = new UIDesign({
       tag: "button",
       id: "webln-btn",
-      className: "bg_l c_d",
+      className: classes.weblnBtn,
     }).setInnerText("WebLN");
     const subheader = new UIDesign({
       tag: "div",
       id: "sub-header",
-      className: "bg_t",
+      className: classes.subHeader,
     });
     const testata = new UIDesign({
       tag: "div",
       id: "testata",
-      className: "bg grid pos_f h_testata w_100vw p_10 box_bb",
+      className: classes.testata,
     });
 
     testata.addChild(header).addChild(subheader);

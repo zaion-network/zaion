@@ -1,11 +1,23 @@
 {
   "name": "@zaion/nostro-mercatino",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/zaion-nostro-mercatino.cjs.js",
+  "module": "dist/zaion-nostro-mercatino.esm.js",
   "repository": "https://giacomogagliano@github.com/ariannatnl/nostro-mercatino.git",
   "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "yarn rollup -c rollup.config.js --watch"
+  },
   "dependencies": {
+    "@zaionstate/nostr": "^0.0.0",
+    "@zaionstate/ui": "^0.0.0",
     "webln": "0.3.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "6.0.3",
+    "@rollup/plugin-commonjs": "25.0.4",
+    "@rollup/plugin-node-resolve": "15.2.1"
   }
 }

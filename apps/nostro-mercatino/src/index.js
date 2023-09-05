@@ -1,10 +1,23 @@
-import { UIDesign } from "./js/Dom.js";
-import { Testata } from "./js/Testata.js";
-import { Content } from "./js/Content.js";
-import { Footer } from "./js/Footer.js";
-import { PopUpMenu } from "./js/PopUpMenu.js";
-import { App } from "./js/App.js";
-import { prodotti } from "./db/prodotti.js";
+import { App } from "@zaionstate/ui";
+import { UIDesign } from "@zaionstate/ui";
+import { Footer } from "./Footer.js";
+import { Testata } from "./Testata.js";
+import { prodotti, prodottiArray } from "./db/prodotti.js";
+import { PopUpMenu } from "./PopUpMenu.js";
+import { Content } from "./Content.js";
+
+import { Relay } from "@zaionstate/nostr/web";
+
+document.addEventListener("DOMContentLoaded", () =>
+  console.log("content loaded")
+);
+document.addEventListener("load", () => console.log("loaded"));
+
+const events = App.events;
+const app = new App({
+  window: window,
+  nodeslist: UIDesign.nodeslist,
+});
 
 function closeChat() {
   const popUpMenuNone = `dis_none`;
@@ -22,8 +35,6 @@ function sendMessage(props) {
   } else {
     var messageText = messageInput.value.trim();
     if (messageText !== "") {
-      relay.messageInput = messageInput;
-      relay.sendToRelay(undefined, messageText);
     }
   }
 }
@@ -78,19 +89,22 @@ function handleNextButtonClick() {
 }
 
 let pubkey;
-const getkey = async () => {
+const getkey = async (createTextElement) => {
+  console.log("called");
   setTimeout(async () => {
     pubkey = await window.nostr.getPublicKey();
+    const { UIDesign } = await import("@zaionstate/ui");
+    console.log(UIDesign);
     console.log(`user connected: ${pubkey.slice(0, 8)}..`);
-    App.Relay.Socket.startSocket({
-      open: App.Relay.openHandler,
-      message: App.Relay.messageHandler((prop) => {
+    Relay.Socket.startSocket({
+      open: Relay.openHandler,
+      message: Relay.messageHandler((prop) => {
         prop.forEach((e) => {
           createTextElement(e.content, e.type);
         });
       })(pubkey),
     });
-  }, 1000);
+  }, 3000);
 };
 
 function createTextElement(messageText, usertype) {
@@ -130,11 +144,6 @@ function createTextElement(messageText, usertype) {
   messageInput.value = "";
 }
 
-const app = new App({
-  window: window,
-  nodeslist: UIDesign.nodeslist,
-});
-
 const bg_color = new UIDesign({
   tag: "div",
   id: "color",
@@ -143,28 +152,32 @@ const bg_color = new UIDesign({
 app.appendTo("layout", bg_color.element);
 app.setBodyClassName("m_0 w_100vw h_100vh");
 
-app.on("themeChange", () => console.log("color theme changed"));
+app.on(events.themeChange, () =>
+  console.log("color theme changed")
+);
 
-app.on("orientationChange", () =>
+app.on(events.orientationChange, () =>
   console.log("orientation changed")
 );
 
-app.on("requestedProvider", () =>
+app.on(events.requestedProvider, () =>
   console.log("provider requested")
 );
 
-app.on("dom", () => {
+app.on(events.dom, () => {
   console.log("dom ready");
-  app.checkNostr();
-  app.requestProvider();
+  setTimeout(() => {
+    app.checkNostr();
+    app.requestProvider();
+  }, 100);
 });
 
-app.on("nostr", () => {
+app.on(events.nostr, () => {
   console.log("got nostr");
-  getkey();
+  getkey(createTextElement);
 });
 
-app.on("load", (app) => {
+app.on(events.load, (app) => {
   console.log("loaded");
   const iffee = (condition, cb) => {
     if (condition) cb();
@@ -174,7 +187,7 @@ app.on("load", (app) => {
   messageInput.addEventListener("keydown", keydownHandler);
 });
 
-app.on("no-provider", () => {
+app.on(events.noProvider, () => {
   console.log("no provider");
   const closeIcon = new UIDesign({
     tag: "div",
@@ -217,29 +230,70 @@ app.on("no-provider", () => {
   popUpMenuDesign.element.className = popUpMenuClassBig;
 });
 // testata
-const testataDesign = new Testata().tree;
+const testataDesign = new Testata({
+  classes: {
+    testata: "bg grid pos_f h_testata w_100vw p_10 box_bb",
+    header: "bg_t flex",
+    weblnBtn: "bg_l c_d",
+    subHeader: "bg_t",
+  },
+}).tree;
 
 const weblnButton = app.get("testata/sub-header/webln-btn");
-app.on("got-provider", () => {
+app.on(events.gotProvider, () => {
   console.log("got provider");
   weblnButton.setInnerText("yeeeee");
 });
 weblnButton.element.addEventListener("click", app.requestProvider);
 app.appendTo("layout", testataDesign.element);
 
+//
+const options = [
+  ["", "#All-tags"],
+  ["vestiti", "#vestiti"],
+  ["musica", "#musica"],
+  ["elettronica", "#elettronica"],
+  ["mobili", "#mobili"],
+  ["viaggiare", "#viaggiare"],
+  ["soundsystem", "#soundsystem"],
+];
 // prodcontainer
-const productContainer = new Content({ prodotti }).tree;
+const productContainer = new Content({
+  prodotti,
+  options,
+  classes: {
+    select: "bg mb_10 mt_10 ol_0 b_n p_4 brad_9 js_e",
+    tagsDropdown: "grid z_1 pos_s top_0 r_0",
+    option: "bg",
+    productContainer:
+      "bg grid p_10 pb_0 pos_f top_as_testata box_bb ofy_a mh_100% w_100% ch_1",
+  },
+}).tree;
 const productScroll = app.get(
   "product-container/product-scroll"
 ).element;
 app.appendTo("layout", productContainer.element);
 
-//
-new Footer().tree;
+new Footer({
+  classes: {
+    footerDesign: "footer h_footer bg  box_bb p_5-20",
+    buttonContainer: "bg p_0-20 flex",
+  },
+}).tree;
 const footerDesign = app.get("footer");
 app.appendTo("layout", footerDesign.element);
 
-new PopUpMenu().tree;
+new PopUpMenu({
+  classes: {
+    closeIcon: "pos_a top_10 r_10 cu_p",
+    chatWindow:
+      "bg w_300 h_400 flex flex-cr of_a b_1-s-rl p_0-5 box_bb",
+    inputContainer: "mt_10 w_240 p_5-10 flex",
+    popUpMenu: `dis_none`,
+    input: "bg_gl c_l b_n w_240 p_5",
+    button: "bg p_5-10",
+  },
+}).tree;
 const popUpMenuDesign = app.get("pop-up-menu");
 app.appendTo("body", popUpMenuDesign.element);
 
@@ -289,7 +343,7 @@ const minWidth768Handler = (_, data) => {
   //   else popUpMenuDesign.element.className = popUpMenuClassBig;
   // }, 200);
 };
-app.on("minWidth768Change", minWidth768Handler);
+app.on(events.minWidth768Change, minWidth768Handler);
 minWidth768Handler(undefined, app.minWidth768Query);
 
 closeIcon.addEventListener("click", closeChat);
