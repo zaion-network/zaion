@@ -1,24 +1,24 @@
-import { UIDesign, Node } from "./Dom.js";
+import { UIDesign } from "@zaionstate/ui";
 
-export interface iFooter {}
-export class Footer implements Node<iFooter> {
-  constructor(public value: iFooter) {}
+export class Footer {
+  constructor(value) {
+    this.value = value;
+  }
 
   get tree() {
-    return Footer.createfooter();
+    return Footer.createfooter(this.value);
   }
   get element() {
-    return Footer.createfooter().element;
+    return Footer.createfooter(this.value).element;
   }
-}
-export namespace Footer {
-  export const createfooter = () => {
+  static createfooter = ({ classes }) => {
+    console.log(classes);
     const setSourceAttributes = (
-      source: UIDesign,
-      src: string,
-      type: string,
-      title: string,
-      artist: string
+      source,
+      src,
+      type,
+      title,
+      artist
     ) => {
       source.setHtmlAttribute("src", src);
       source.setHtmlAttribute("type", type);
@@ -67,7 +67,6 @@ export namespace Footer {
       id: "audio-player",
       className: "bg l_-9999 pos_a",
     })
-      // @ts-expect-error
       .setHtmlAttribute("controls")
       .setInnerText("Your browser does not support the audio tag.");
     const trackTitleDesign = new UIDesign({
@@ -84,7 +83,6 @@ export namespace Footer {
       tag: "button",
       id: "play-pause-button",
       className: "bg_l c_d fs_90%",
-      // @ariannatnl non so come si usa questa string
     }).setInnerText("▶︎");
     const nextBtnDesign = new UIDesign({
       tag: "button",
@@ -105,21 +103,26 @@ export namespace Footer {
     const buttonContainer = new UIDesign({
       tag: "div",
       id: "button-container",
-      className: "bg p_0-20 flex",
+      className: classes.buttonContainer,
     });
     const footerDesign = new UIDesign({
       tag: "footer",
       id: "footer",
-      className: "footer h_footer bg  box_bb p_5-20",
+      className: classes.footerDesign,
     });
-    footerDesign.addChild(musicplayerDesign).addChild(buttonContainer);
+    footerDesign
+      .addChild(musicplayerDesign)
+      .addChild(buttonContainer);
     musicplayerDesign
       .addChild(audioPlayerDesign)
       .addChild(trackTitleDesign)
       .addChild(trackArtistDesign)
       .addChild(playPauseBtnDesign)
       .addChild(nextBtnDesign);
-    audioPlayerDesign.addChild(source1).addChild(source2).addChild(source3);
+    audioPlayerDesign
+      .addChild(source1)
+      .addChild(source2)
+      .addChild(source3);
     buttonContainer.addChild(groupChatDesign);
     return footerDesign;
   };
