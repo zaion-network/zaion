@@ -1,5 +1,4 @@
 import { Nostr as N } from "../../Nostr";
-import { Event as E } from "./Event";
 
 declare module "../../Nostr" {
   namespace Nostr {
@@ -21,9 +20,9 @@ declare module "../../Nostr" {
     }
     namespace Kinds {
       interface kinds {
-        metadata?: "Metadata";
-        short_note?: "Short Text Note";
-        recommend_relay?: "Recommended Relay";
+        metadata: "Metadata";
+        short_note: "Short Text Note";
+        recommend_relay: "Recommended Relay";
       }
     }
     namespace Messages {
@@ -51,7 +50,7 @@ declare module "../../Nostr" {
       interface relayMessageDescriptions {
         AUTH: "used to send authentication challenges";
         COUNT: "used to send requested event counts to clients";
-        EOSE: "used to notify clients all stored events have been ";
+        EOSE: "used to notify clients all stored events have been";
         EVENT: "used to send events requested to clients";
         NOTICE: "used to send human-readable messages to clients";
         OK: "used to notify clients if an EVENT was successful";
@@ -73,9 +72,6 @@ declare module "../../Nostr" {
       type Event = {};
       type serialized<T> = T extends object ? string : never;
     }
-
-    export import Event = E;
-    export import Tag = E;
   }
 
   // extensions of basic types
@@ -86,37 +82,6 @@ declare module "../../Nostr" {
   // type tags = string[];
   // type content = string;
 }
-N.Nips.nipTitles = { "001": "Basic protocol flow description" };
-N.Tags.tagNames = { e: "e", p: "p" };
-N.Tags.newTagDescriptions = { e: "event id (hex)", p: "pubkey (hex)" };
-N.Kinds.kinds = {
-  metadata: "Metadata",
-  recommend_relay: "Recommended Relay",
-  short_note: "Short Text Note",
-};
-N.Messages.commonMessageTypes = {
-  auth: "AUTH",
-  event: "EVENT",
-  count: "COUNT",
-};
-N.Messages.clientMessageTypes = { close: "CLOSE", req: "REQ" };
-N.Messages.clientMessageDescriptions = {
-  AUTH: "used to send authentication events",
-  CLOSE: "used to stop previous subscriptions",
-  COUNT: "used to request event counts",
-  EVENT: "used to publish events",
-  REQ: "used to request events and subscribe to new updates",
-};
-N.Messages.relayMessageTypes = { eose: "EOSE", notice: "NOTICE", ok: "OK" };
-N.Messages.relayMessageDescriptions = {
-  AUTH: "used to send authentication challenges",
-  COUNT: "used to send requested event counts to clients",
-  EOSE: "used to notify clients all stored events have been ",
-  EVENT: "used to send events requested to clients",
-  NOTICE: "used to send human-readable messages to clients",
-  OK: "used to notify clients if an EVENT was successful",
-};
-N.Event = E;
 
 const Nip = N.Nips.Nip;
 const nipTitles = N.Nips.nipTitles;
@@ -124,7 +89,7 @@ const KindDefinition = N.Kinds.KindDefinition;
 const kinds = N.Kinds.kinds;
 const TagDefinition = N.Tags.TagDefinition;
 const tagNames = N.Tags.tagNames;
-const tagDescriptions = N.Tags.newTagDescriptions;
+const newTagDescriptions = N.Tags.newTagDescriptions;
 const otherParameters = N.Tags.otherParameters;
 const ClientMessageDefinition = N.Messages.ClientMessageDefinition;
 const RelayMessageDefinition = N.Messages.RelayMessageDefinition;
@@ -334,15 +299,15 @@ export namespace _001 {
   new KindDefinition(2, kinds.recommend_relay!, nip_001);
 
   new TagDefinition(
-    N.Tags.tagNames.e,
-    N.Tags.newTagDescriptions.e,
+    tagNames.e,
+    newTagDescriptions.e,
     [otherParameters.relay_url, otherParameters.marker],
     nip_001
   );
 
   new TagDefinition(
-    N.Tags.tagNames.p,
-    N.Tags.newTagDescriptions.p,
+    tagNames.p,
+    newTagDescriptions.p,
     [otherParameters.relay_url],
     nip_001
   );
@@ -354,7 +319,7 @@ export namespace _001 {
   );
 
   new ClientMessageDefinition(
-    commonMessageTypes.event,
+    commonMessageTypes.event!,
     clientMessageDescriptions.EVENT,
     nip_001
   );
@@ -366,7 +331,7 @@ export namespace _001 {
   );
 
   new RelayMessageDefinition(
-    commonMessageTypes.event,
+    commonMessageTypes.event!,
     relayMessageDescriptions.EVENT,
     nip_001
   );
@@ -383,6 +348,3 @@ export namespace _001 {
     nip_001
   );
 }
-
-N.Nip_001 = _001;
-export import Nostr = N;

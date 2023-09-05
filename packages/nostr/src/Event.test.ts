@@ -1,7 +1,7 @@
 import WebSocket from "ws";
 import { Event } from "./Event";
 import { IncomingMessage } from "http";
-import { Nostr } from "./Nips/Nip_005/Nip_005";
+import { Nostr } from "./Nostr";
 
 const relayTest = () => {
   // URL del server WebSocket

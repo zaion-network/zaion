@@ -3,6 +3,7 @@ import { Tags as T } from "./Tags";
 import { Nips as N } from "./Nips";
 import { Messages as M } from "./Messages";
 import { Kinds as K } from "./Kinds";
+// import { Event as E } from "./Nips/Nip_001/Event";
 
 export namespace Nostr {
   export import BasicTypes = B;

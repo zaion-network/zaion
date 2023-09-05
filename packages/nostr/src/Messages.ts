@@ -2,7 +2,7 @@ import { Nostr } from "./Nostr";
 
 export namespace Messages {
   interface Record {
-    [key: string]: string;
+    [key: string]: string | undefined;
   }
 
   export enum messageSides {
@@ -11,19 +11,43 @@ export namespace Messages {
   }
 
   export interface commonMessageTypes extends Record {}
-  export var commonMessageTypes: commonMessageTypes;
+  export const commonMessageTypes: commonMessageTypes = {
+    auth: "AUTH",
+    event: "EVENT",
+    count: "COUNT",
+  };
 
   export interface clientMessageTypes extends Record {}
-  export var clientMessageTypes: clientMessageTypes;
+  export const clientMessageTypes: clientMessageTypes = {
+    req: "REQ",
+    close: "CLOSE",
+  };
 
   export interface clientMessageDescriptions extends Record {}
-  export var clientMessageDescriptions: clientMessageDescriptions;
+  export const clientMessageDescriptions: clientMessageDescriptions = {
+    AUTH: "used to send authentication events",
+    CLOSE: "used to stop previous subscriptions",
+    EVENT: "used to publish events",
+    REQ: "used to request events and subscribe to new updates",
+    COUNT: "used to request event counts",
+  };
 
   export interface relayMessageTypes extends Record {}
-  export var relayMessageTypes: relayMessageTypes;
+  export const relayMessageTypes: relayMessageTypes = {
+    eose: "EOSE",
+    notice: "NOTICE",
+    ok: "OK",
+  };
 
   export interface relayMessageDescriptions extends Record {}
-  export var relayMessageDescriptions: relayMessageDescriptions;
+  export const relayMessageDescriptions: relayMessageDescriptions = {
+    AUTH: "used to send authentication challenges",
+    COUNT: "used to send requested event counts to clients",
+    EOSE: "used to notify clients all stored events have been",
+    EVENT: "used to send events requested to clients",
+    NOTICE: "used to send human-readable messages to clients",
+    OK: "used to notify clients if an EVENT was successful",
+  };
 
   export interface MessageDefinition<
     S extends messageSides,
@@ -39,6 +63,7 @@ export namespace Messages {
     side: S;
     type: T;
     description: D;
+    // @ts-ignore
     nip: Nostr.Nips.Nip<I, any>;
   }
   export class MessageDefinition<
@@ -57,6 +82,7 @@ export namespace Messages {
       public side: S,
       public type: T,
       public description: D,
+      // @ts-ignore
       nip: Nostr.Nips.Nip<I, any>
     ) {
       nip.addMessage(this);
@@ -80,6 +106,7 @@ export namespace Messages {
     extends MessageDefinition<messageSides.client_relay, T, D, I>
     implements ClientMessageDefinition<T, D, I>
   {
+    // @ts-ignore
     constructor(type: T, description: D, nip: Nostr.Nips.Nip<I, any>) {
       super(messageSides.client_relay, type, description, nip);
     }
@@ -102,6 +129,7 @@ export namespace Messages {
     extends MessageDefinition<messageSides.relay_client, T, D, I>
     implements RelayMessageDefinition<T, D, I>
   {
+    // @ts-ignore
     constructor(type: T, description: D, nip: Nostr.Nips.Nip<I, any>) {
       super(messageSides.relay_client, type, description, nip);
     }
