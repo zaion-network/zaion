@@ -1,0 +1,25 @@
+{
+  "name": "@zaionstate/ui",
+  "version": "0.0.0",
+  "main": "dist/zaionstate-ui.cjs.js",
+  "module": "dist/zaionstate-ui.esm.js",
+  "types": "dist/declarations/src/index.d.ts",
+  "source": "src/index.ts",
+  "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "fix:pre": "yarn preconstruct fix",
+    "fix": "fix:pre",
+    "build:pkg": "yarn preconstruct build",
+    "build": "build:pkg",
+    "dev:watch": "preconstruct watch",
+    "dev": "yarn dev:watch"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-typescript": "7.22.15",
+    "@babel/preset-env": "7.22.14",
+    "@babel/preset-typescript": "7.22.15",
+    "@preconstruct/cli": "2.8.1"
+  }
+}
