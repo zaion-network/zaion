@@ -1,4 +1,4 @@
-import { Nostr } from "./Nips/Nip_001/Nip_001";
+import { Nostr } from "./Nostr";
 
 console.log(Nostr.Nip_001);
 console.log(Nostr.Event.clientMessages);

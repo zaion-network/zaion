@@ -2,7 +2,13 @@ import { Nostr } from "./Nostr";
 
 export namespace Nips {
   export interface nipTitles {}
-  export var nipTitles: nipTitles;
+  export const nipTitles: nipTitles = {
+    "001": "Basic protocol flow description",
+    "002": "Contact List and Petnames",
+    "003": "OpenTimestamps Attestations for Events",
+    "004": "EncryptedDirectMessage",
+    "005": "MappingNostrkeystoDNS-basedinternetidentifiers",
+  };
   export interface Nip<
     I extends number,
     T extends (typeof nipTitles)[keyof typeof nipTitles]

@@ -1,11 +1,11 @@
-import { Nostr as N } from "../Nip_004/Nip_004";
+import { Nostr as N } from "../../Nostr";
 
 declare module "../../Nostr" {
   namespace Nostr {
     export import Nip_005 = _005;
     namespace Nips {
       interface nipTitles {
-        ["005"]?: "MappingNostrkeystoDNS-basedinternetidentifiers";
+        ["005"]: "MappingNostrkeystoDNS-basedinternetidentifiers";
       }
     }
     namespace Event {
@@ -39,11 +39,6 @@ declare module "../../Nostr" {
     }
   }
 }
-
-N.Nips.nipTitles = {
-  ...N.Nips.nipTitles,
-  "005": "MappingNostrkeystoDNS-basedinternetidentifiers",
-} as const;
 const Nip = N.Nips.Nip;
 const nipTitles = N.Nips.nipTitles;
 
@@ -148,9 +143,6 @@ const nipTitles = N.Nips.nipTitles;
  * Fetchers MUST ignore any HTTP redirects given by the `/.well-known/nostr.json` endpoint.
  *
  */
-namespace _005 {
+export namespace _005 {
   export const nip_005 = new Nip(5, nipTitles["005"]);
 }
-
-N.Nip_005 = _005;
-export import Nostr = N;

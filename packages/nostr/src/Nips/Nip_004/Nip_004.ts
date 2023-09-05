@@ -1,26 +1,21 @@
-import { Nostr as N } from "../Nip_003/Nip_003";
+import { Nostr as N } from "../../Nostr";
 
 declare module "../../Nostr" {
   namespace Nostr {
     export import Nip_004 = _004;
     namespace Nips {
       interface nipTitles {
-        ["004"]?: "EncryptedDirectMessage";
+        ["004"]: "EncryptedDirectMessage";
       }
     }
     namespace Kinds {
       interface kinds {
-        encryptedDirectMessages?: "Encrypted Direct Messages";
+        encryptedDirectMessages: "Encrypted Direct Messages";
       }
     }
   }
 }
 
-N.Nips.nipTitles = {
-  ...N.Nips.nipTitles,
-  "004": "EncryptedDirectMessage",
-} as const;
-N.Kinds.kinds = { encryptedDirectMessages: "Encrypted Direct Messages" };
 const Nip = N.Nips.Nip;
 const nipTitles = N.Nips.nipTitles;
 const Kind = N.Kinds.KindDefinition;
@@ -82,10 +77,7 @@ const kinds = N.Kinds.kinds;
  * Clients *should not* search and replace public key or note references from the `.content`. If processed like a regular text note (where `@npub...` is replaced with `#[0]` with a `["p", "..."]` tag) the tags are leaked and the mentioned user will receive the message in their inbox.
  *
  */
-namespace _004 {
+export namespace _004 {
   export const nip_004 = new Nip(4, nipTitles["004"]);
   export const kind_4 = new Kind(4, kinds.encryptedDirectMessages!, nip_004);
 }
-
-N.Nip_004 = _004;
-export import Nostr = N;

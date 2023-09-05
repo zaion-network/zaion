@@ -4,7 +4,13 @@ export namespace Kinds {
   export interface kinds {
     [k: string]: string | undefined;
   }
-  export var kinds: kinds;
+  export const kinds: kinds = {
+    metadata: "Metadata",
+    recommend_relay: "Recommended Relay",
+    short_note: "Short Text Note",
+    contacts: "Contacts",
+    encryptedDirectMessages: "Encrypted Direct Messages",
+  };
   // export enum kinds {
   //   metadata = "Metadata",
   //   short_note = "Short Text Note",
@@ -62,6 +68,7 @@ export namespace Kinds {
   > {
     kind: K;
     description: D;
+    // @ts-ignore
     nip: Nostr.Nips.Nip<I, any>;
   }
   export class KindDefinition<
@@ -72,6 +79,7 @@ export namespace Kinds {
     constructor(
       public kind: K,
       public description: D,
+      // @ts-ignore
       nip: Nostr.Nips.Nip<I, any>
     ) {
       nip.addKind(this);
@@ -91,6 +99,7 @@ export namespace Kinds {
     D extends kindRanges,
     I extends number
   > {
+    // @ts-ignore
     range: Nostr.BasicTypes.range<L, H>;
     description: D;
   }
@@ -102,8 +111,10 @@ export namespace Kinds {
   > implements KindRange<L, H, D, I>
   {
     constructor(
+      // @ts-ignore
       public range: Nostr.BasicTypes.range<L, H>,
       public description: D,
+      // @ts-ignore
       nip: Nostr.Nips.Nip<I, any>
     ) {
       nip.addKindRange(this);

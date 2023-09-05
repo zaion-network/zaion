@@ -1,26 +1,20 @@
-import { Nostr as N } from "../Nip_001/Nip_001";
+import { Nostr as N } from "../../Nostr";
 
 declare module "../../Nostr" {
   namespace Nostr {
     export import Nip_002 = _002;
     namespace Nips {
       interface nipTitles {
-        ["002"]?: "Contact List and Petnames";
+        ["002"]: "Contact List and Petnames";
       }
     }
     namespace Kinds {
       interface kinds {
-        contacts?: "Contacts";
+        contacts: "Contacts";
       }
     }
   }
 }
-
-N.Nips.nipTitles = {
-  ...N.Nips.nipTitles,
-  "002": "Contact List and Petnames",
-} as const;
-N.Kinds.kinds = { contacts: "Contacts" };
 
 const Nip = N.Nips.Nip;
 const nipTitles = N.Nips.nipTitles;
@@ -138,6 +132,3 @@ export namespace _002 {
   export const nip_002 = new Nip(2, nipTitles["002"]);
   export const kind_3 = new Kind(3, kinds.contacts!, nip_002);
 }
-
-N.Nip_002 = _002;
-export import Nostr = N;

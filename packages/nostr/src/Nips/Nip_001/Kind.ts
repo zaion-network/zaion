@@ -1,4 +1,4 @@
-import { Nostr } from "./Nip_001";
+import { Nostr } from "../../Nostr";
 
 type Byte32LoCaseHex<T extends string> = Nostr.BasicTypes.Byte32LoCaseHex<T>;
 type Sha<T extends string> = Nostr.BasicTypes.Sha<T>;

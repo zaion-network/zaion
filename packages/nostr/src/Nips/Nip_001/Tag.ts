@@ -1,4 +1,4 @@
-import { Nostr } from "./Nip_001";
+import { Nostr } from "../../Nostr";
 
 type id = Nostr.BasicTypes.id;
 type pubkey = Nostr.BasicTypes.pubkey;

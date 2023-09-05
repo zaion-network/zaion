@@ -10,14 +10,17 @@ declare module "./Tags" {}
 
 export namespace Tags {
   export interface tagNames {
-    [k: string]: string;
+    [k: string]: string | undefined;
   }
-  export var tagNames: tagNames;
+  export const tagNames: tagNames = { e: "e", p: "p" };
 
   export interface newTagDescriptions {
-    [k: string]: string;
+    [k: string]: string | undefined;
   }
-  export var newTagDescriptions: newTagDescriptions;
+  export const newTagDescriptions: newTagDescriptions = {
+    e: "event id (hex)",
+    p: "pubkey (hex)",
+  };
   export type AnyTag = TagDefinition<any, any, any, any, any>;
   // export enum tagNames {
   //   a = "a",
@@ -117,7 +120,9 @@ export namespace Tags {
     name: N;
     description: D;
     other_parameters: O[];
+    // @ts-ignore
     nip: N.Nips.Nip<I, any>;
+    // @ts-ignore
     addTagToNip<I extends number>(nip: N.Nips.Nip<I, any>): this;
   }
   export class TagDefinition<
@@ -132,10 +137,12 @@ export namespace Tags {
       public name: N,
       public description: D,
       public other_parameters: O[],
+      // @ts-ignore
       nip: N.Nips.Nip<I, any>
     ) {
       nip.addTag(this);
     }
+    // @ts-ignore
     addTagToNip<I extends number>(nip: N.Nips.Nip<I, any>): this {
       nip.addTag(this);
       return this;
