@@ -1,4 +1,20 @@
-import { Nostr as N } from "../../Nostr";
+import { nipTitles, Nip } from "../../Nips";
+import { KindDefinition, kinds } from "../../Kinds";
+import {
+  TagDefinition,
+  tagNames,
+  newTagDescriptions,
+  otherParameters,
+} from "../../Tags";
+import {
+  ClientMessageDefinition,
+  RelayMessageDefinition,
+  commonMessageTypes,
+  relayMessageTypes,
+  clientMessageTypes,
+  relayMessageDescriptions,
+  clientMessageDescriptions,
+} from "../../Messages";
 
 declare module "../../Nostr" {
   namespace Nostr {
@@ -82,22 +98,6 @@ declare module "../../Nostr" {
   // type tags = string[];
   // type content = string;
 }
-
-const Nip = N.Nips.Nip;
-const nipTitles = N.Nips.nipTitles;
-const KindDefinition = N.Kinds.KindDefinition;
-const kinds = N.Kinds.kinds;
-const TagDefinition = N.Tags.TagDefinition;
-const tagNames = N.Tags.tagNames;
-const newTagDescriptions = N.Tags.newTagDescriptions;
-const otherParameters = N.Tags.otherParameters;
-const ClientMessageDefinition = N.Messages.ClientMessageDefinition;
-const RelayMessageDefinition = N.Messages.RelayMessageDefinition;
-const commonMessageTypes = N.Messages.commonMessageTypes;
-const clientMessageTypes = N.Messages.clientMessageTypes;
-const relayMessageTypes = N.Messages.relayMessageTypes;
-const clientMessageDescriptions = N.Messages.clientMessageDescriptions;
-const relayMessageDescriptions = N.Messages.relayMessageDescriptions;
 
 /**
  * NIP-01

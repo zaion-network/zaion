@@ -1,6 +1,6 @@
-import { Nostr as N } from "../../Nostr";
-
-declare module "../Nip_001/Event" {}
+import type { Event as E } from "../../Event";
+import type { Nostr as N } from "../../Nostr";
+import { nipTitles, Nip } from "../../Nips";
 
 type RecommendedRelayURL = N.BasicTypes.RecommendedRelayURL;
 
@@ -20,19 +20,19 @@ declare module "../../Nostr" {
         K extends number,
         C extends string,
         T extends (
-          | ["e", id, RecommendedRelayURL]
-          | ["p", pubkey, RecommendedRelayURL]
-          | rootMessage
-          | replyMessage
-          | hideMessage
-          | muteUser
+          | ["e", E.id, RecommendedRelayURL]
+          | ["p", E.pubkey, RecommendedRelayURL]
+          | E.rootMessage
+          | E.replyMessage
+          | E.hideMessage
+          | E.muteUser
         )[] = (
-          | ["e", id, RecommendedRelayURL]
-          | ["p", pubkey, RecommendedRelayURL]
-          | rootMessage
-          | replyMessage
-          | hideMessage
-          | muteUser
+          | ["e", E.id, RecommendedRelayURL]
+          | ["p", E.pubkey, RecommendedRelayURL]
+          | E.rootMessage
+          | E.replyMessage
+          | E.hideMessage
+          | E.muteUser
         )[]
       > {
         ots?: BasicTypes.Base64<BasicTypes.OTSData>;
@@ -40,9 +40,6 @@ declare module "../../Nostr" {
     }
   }
 }
-
-const Nip = N.Nips.Nip;
-const nipTitles = N.Nips.nipTitles;
 
 /**
  * NIP-03

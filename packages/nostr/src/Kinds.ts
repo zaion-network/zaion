@@ -1,9 +1,38 @@
 import { Nostr } from "./Nostr";
 
-export namespace Kinds {
-  export interface kinds {
-    [k: string]: string | undefined;
+declare module "./Kinds" {
+  namespace Kinds {
+    type AnyKind = KindDefinition<any, any, any>;
+    type AnyKindRange = KindRange<any, any, any, any>;
+    interface kinds {
+      [k: string]: string | undefined;
+    }
+    namespace KindDefinition {
+      interface Contract<
+        K extends number,
+        D extends (typeof kinds)[string],
+        I extends number
+      > {
+        kind: K;
+        description: D;
+        nip: Nostr.Nips.Nip<I, any>;
+      }
+    }
+    namespace KindRange {
+      interface Contract<
+        L extends number,
+        H extends number,
+        D extends kindRanges,
+        I extends number
+      > {
+        range: Nostr.BasicTypes.range<L, H>;
+        description: D;
+      }
+    }
   }
+}
+
+export namespace Kinds {
   export const kinds: kinds = {
     metadata: "Metadata",
     recommend_relay: "Recommended Relay",
@@ -61,66 +90,60 @@ export namespace Kinds {
     nip = "nip",
   }
 
-  export interface KindDefinition<
-    K extends number,
-    D extends (typeof kinds)[string],
-    I extends number
-  > {
-    kind: K;
-    description: D;
-    // @ts-ignore
-    nip: Nostr.Nips.Nip<I, any>;
-  }
-  export class KindDefinition<
-    K extends number,
-    D extends (typeof kinds)[string],
-    I extends number
-  > {
-    constructor(
-      public kind: K,
-      public description: D,
-      // @ts-ignore
-      nip: Nostr.Nips.Nip<I, any>
-    ) {
-      nip.addKind(this);
-    }
-  }
-
   export enum kindRanges {
     regular = "Regular Events",
     replaceable = "Replabeable Events",
     ephemeral = "Ephemeral Events",
     param_repl = "Parametrizable Replaceable Events",
   }
+}
 
-  export interface KindRange<
-    L extends number,
-    H extends number,
-    D extends kindRanges,
-    I extends number
-  > {
-    // @ts-ignore
-    range: Nostr.BasicTypes.range<L, H>;
-    description: D;
+export interface KindDefinition<
+  K extends number,
+  D extends (typeof Kinds.kinds)[string],
+  I extends number
+> extends Kinds.KindDefinition.Contract<K, D, I> {}
+export class KindDefinition<
+  K extends number,
+  D extends (typeof Kinds.kinds)[string],
+  I extends number
+> implements Kinds.KindDefinition.Contract<K, D, I>
+{
+  constructor(
+    public kind: K,
+    public description: D,
+    nip: Nostr.Nips.Nip<I, any>
+  ) {
+    nip.addKind(this);
   }
-  export class KindRange<
-    L extends number,
-    H extends number,
-    D extends kindRanges,
-    I extends number
-  > implements KindRange<L, H, D, I>
-  {
-    constructor(
-      // @ts-ignore
-      public range: Nostr.BasicTypes.range<L, H>,
-      public description: D,
-      // @ts-ignore
-      nip: Nostr.Nips.Nip<I, any>
-    ) {
-      nip.addKindRange(this);
-    }
-  }
+}
 
-  export type AnyKind = KindDefinition<any, any, any>;
-  export type AnyKindRange = KindRange<any, any, any, any>;
+export const kinds: Kinds.kinds = {
+  metadata: "Metadata",
+  recommend_relay: "Recommended Relay",
+  short_note: "Short Text Note",
+  contacts: "Contacts",
+  encryptedDirectMessages: "Encrypted Direct Messages",
+};
+
+export interface KindRange<
+  L extends number,
+  H extends number,
+  D extends Kinds.kindRanges,
+  I extends number
+> extends Kinds.KindRange.Contract<L, H, D, I> {}
+export class KindRange<
+  L extends number,
+  H extends number,
+  D extends Kinds.kindRanges,
+  I extends number
+> implements Kinds.KindRange.Contract<L, H, D, I>
+{
+  constructor(
+    public range: Nostr.BasicTypes.range<L, H>,
+    public description: D,
+    nip: Nostr.Nips.Nip<I, any>
+  ) {
+    nip.addKindRange(this);
+  }
 }

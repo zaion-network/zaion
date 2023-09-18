@@ -1,27 +1,43 @@
-import { Nostr as N, Nostr } from "./Nostr";
+import { Nostr } from "./Nostr";
 
-// declare module "./Nostr" {
-//   export namespace Nostr {
-//     export import Tags = _Tags;
-//   }
-// }
-
-declare module "./Tags" {}
+declare module "./Tags" {
+  type id = Nostr.BasicTypes.id;
+  type pubkey = Nostr.BasicTypes.pubkey;
+  type RecommendedRelayURL = Nostr.BasicTypes.RecommendedRelayURL;
+  type e = Nostr.Tags.tagNames["e"];
+  type p = Nostr.Tags.tagNames["p"];
+  namespace Tags {
+    type AnyTag = TagDefinition<any, any, any, any, any>;
+    interface tagNames {
+      [k: string]: string;
+    }
+    interface newTagDescriptions {
+      [k: string]: string | undefined;
+    }
+    namespace TagDefinition {
+      interface Contract<
+        N extends (typeof tagNames)[string],
+        D extends (typeof newTagDescriptions)[string],
+        F extends `${D}`,
+        O extends otherParameters,
+        I extends number
+      > {
+        name: N;
+        description: D;
+        other_parameters: O[];
+        nip: Nostr.Nips.Nip<I, any>;
+        addTagToNip<I extends number>(nip: Nostr.Nips.Nip<I, any>): this;
+      }
+    }
+  }
+}
 
 export namespace Tags {
-  export interface tagNames {
-    [k: string]: string | undefined;
-  }
   export const tagNames: tagNames = { e: "e", p: "p" };
-
-  export interface newTagDescriptions {
-    [k: string]: string | undefined;
-  }
   export const newTagDescriptions: newTagDescriptions = {
     e: "event id (hex)",
     p: "pubkey (hex)",
   };
-  export type AnyTag = TagDefinition<any, any, any, any, any>;
   // export enum tagNames {
   //   a = "a",
   //   alt = "alt",
@@ -109,46 +125,39 @@ export namespace Tags {
     reply = "reply",
     mention = "mention",
   }
+}
+export const tagNames = Tags.tagNames;
+export const newTagDescriptions = Tags.newTagDescriptions;
+export const otherParameters = Tags.otherParameters;
 
-  export interface TagDefinition<
-    N extends (typeof tagNames)[string],
-    D extends (typeof newTagDescriptions)[string],
-    F extends `${D}`,
-    O extends otherParameters,
-    I extends number
-  > {
-    name: N;
-    description: D;
-    other_parameters: O[];
-    // @ts-ignore
-    nip: N.Nips.Nip<I, any>;
-    // @ts-ignore
-    addTagToNip<I extends number>(nip: N.Nips.Nip<I, any>): this;
+export interface TagDefinition<
+  N extends (typeof Tags.tagNames)[string],
+  D extends (typeof Tags.newTagDescriptions)[string],
+  F extends `${D}`,
+  O extends Tags.otherParameters,
+  I extends number
+> extends Tags.TagDefinition.Contract<N, D, F, O, I> {}
+export class TagDefinition<
+  N extends (typeof Tags.tagNames)[string],
+  D extends (typeof Tags.newTagDescriptions)[string],
+  F extends `${D}`,
+  O extends Tags.otherParameters,
+  I extends number
+> implements Tags.TagDefinition.Contract<N, D, F, O, I>
+{
+  constructor(
+    public name: N,
+    public description: D,
+    public other_parameters: O[],
+    nip: Nostr.Nips.Nip<I, any>
+  ) {
+    nip.addTag(this);
   }
-  export class TagDefinition<
-    N extends (typeof tagNames)[string],
-    D extends (typeof newTagDescriptions)[string],
-    F extends `${D}`,
-    O extends otherParameters,
-    I extends number
-  > implements TagDefinition<N, D, F, O, I>
-  {
-    constructor(
-      public name: N,
-      public description: D,
-      public other_parameters: O[],
-      // @ts-ignore
-      nip: N.Nips.Nip<I, any>
-    ) {
-      nip.addTag(this);
-    }
-    // @ts-ignore
-    addTagToNip<I extends number>(nip: N.Nips.Nip<I, any>): this {
-      nip.addTag(this);
-      return this;
-    }
-    get fieldName(): F {
-      return `#${this.name}` as F;
-    }
+  addTagToNip<I extends number>(nip: Nostr.Nips.Nip<I, any>): this {
+    nip.addTag(this);
+    return this;
+  }
+  get fieldName(): F {
+    return `#${this.name}` as F;
   }
 }
