@@ -1,1 +1,1 @@
-export { Git } from "./Git";
+export * as ZaionGit from "./ZaionGit"
