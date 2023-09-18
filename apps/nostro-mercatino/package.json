@@ -8,9 +8,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "yarn rollup -c rollup.config.js --watch",
-    "build:rollup": "rollup -c rollup.config.js",
-    "build": "script/build.js && yarn build:rollup"
+    "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
+    "build": "bun build ./src/index.js --outdir ./dist --target browser"
   },
   "dependencies": {
     "@zaionstate/nostr": "workspace:*",
