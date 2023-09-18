@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zaion Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500&family=Roboto+Mono:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      margin: 0;
+      border: none;
+      padding: 0;
+      font-family: "Encode Sans", sans-serif;
+      background-color: hsl(170, 32%, 10%);
+      color: hsl(350, 3%, 98%);
+    }
+    h1 {
+      margin: 0;
+    }
+    #container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      place-content: center;
+      text-align: center;
+    }
+    #main-title {
+      font-size: 10rem;
+      letter-spacing: 0.23rem;
+      color: hsl(350, 97%, 62%);
+    }
+    #footer {
+      display: flex;
+      place-content: end;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+      > a {
+        margin-right: 1rem;
+      }
+    }
+  </style>
+  <body>
+    <div id="container">
+      <h1 id="main-title">Zaion</h1>
+      <h1 id="main-title">Network State</h1>
+      <p>take it slow and steady!</p>
+      <footer id="footer"><a href="./about.html">about</a><a>repo</a></footer>
+    </div>
+  </body>
+  <script type="module" src="./dist/index.js"></script>
+</html>
