@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "JSON schema for NPM package.json files",
+  "definitions": {
+    "person": {
+      "description": "A person who has been involved in creating or maintaining this package.",
+      "type": ["object", "string"],
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "dependency": {
+      "description": "Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "scriptsInstallAfter": {
+      "description": "Run AFTER the package is installed.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsPublishAfter": {
+      "description": "Run AFTER the package is published.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsRestart": {
+      "description": "Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsStart": {
+      "description": "Run by the 'npm start' command.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsStop": {
+      "description": "Run by the 'npm stop' command.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsTest": {
+      "description": "Run by the 'npm test' command.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsUninstallBefore": {
+      "description": "Run BEFORE the package is uninstalled.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "scriptsVersionBefore": {
+      "description": "Run BEFORE bump the package version.",
+      "type": "string",
+      "x-intellij-language-injection": "Shell Script"
+    },
+    "packageExportsEntryPath": {
+      "type": ["string", "null"],
+      "description": "The module path that is resolved when this specifier is imported. Set to `null` to disallow importing this module.",
+      "pattern": "^\\./"
+    },
+    "packageExportsEntryObject": {
+      "type": "object",
+      "description": "Used to specify conditional exports, note that Conditional exports are unsupported in older environments, so it's recommended to use the fallback array option if support for those environments is a concern.",
+      "properties": {
+        "require": {
+          "$ref": "#/definitions/packageExportsEntryOrFallback",
+          "description": "The module path that is resolved when this specifier is imported as a CommonJS module using the `require(...)` function."
+        },
+        "import": {
+          "$ref": "#/definitions/packageExportsEntryOrFallback",
+          "description": "The module path that is resolved when this specifier is imported as an ECMAScript module using an `import` declaration or the dynamic `import(...)` function."
+        },
+        "node": {
+          "$ref": "#/definitions/packageExportsEntryOrFallback",
+          "description": "The module path that is resolved when this environment is Node.js."
+        },
+        "default": {
+          "$ref": "#/definitions/packageExportsEntryOrFallback",
+          "description": "The module path that is resolved when no other export type matches."
+        }
+      },
+      "patternProperties": {
+        "^(?![\\.0-9]).": {
+          "$ref": "#/definitions/packageExportsEntryOrFallback",
+          "description": "The module path that is resolved when this environment matches the property name."
+        }
+      },
+      "additionalProperties": false
+    },
+    "packageExportsEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/packageExportsEntryPath"
+        },
+        {
+          "$ref": "#/definitions/packageExportsEntryObject"
+        }
+      ]
+    },
+    "packageExportsFallback": {
+      "type": "array",
+      "description": "Used to allow fallbacks in case this environment doesn't support the preceding entries.",
+      "items": {
+        "$ref": "#/definitions/packageExportsEntry"
+      }
+    },
+    "packageExportsEntryOrFallback": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/packageExportsEntry"
+        },
+        {
+          "$ref": "#/definitions/packageExportsFallback"
+        }
+      ]
+    },
+    "fundingUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to a website with details about how to fund the package."
+    },
+    "fundingWay": {
+      "type": "object",
+      "description": "Used to inform about ways to help fund development of the package.",
+      "properties": {
+        "url": {
+          "$ref": "#/definitions/fundingUrl"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of funding or the platform through which funding can be provided, e.g. patreon, opencollective, tidelift or github."
+        }
+      },
+      "additionalProperties": false,
+      "required": ["url"]
+    }
+  },
+  "type": "object",
+  "patternProperties": {
+    "^_": {
+      "description": "Any property starting with _ is valid.",
+      "tsType": "any"
+    }
+  },
+  "anyOf": [
+    {
+      "type": "object",
+      "not": {
+        "required": ["bundledDependencies", "bundleDependencies"]
+      }
+    },
+    {
+      "type": "object",
+      "not": {
+        "required": ["bundleDependencies"]
+      },
+      "required": ["bundledDependencies"]
+    },
+    {
+      "type": "object",
+      "not": {
+        "required": ["bundledDependencies"]
+      },
+      "required": ["bundleDependencies"]
+    }
+  ]
+}
