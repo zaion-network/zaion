@@ -1,4 +1,5 @@
-import { Nostr as N } from "../../Nostr";
+import type { Event as E } from "../../Event";
+import { nipTitles, Nip } from "../../Nips";
 
 declare module "../../Nostr" {
   namespace Nostr {
@@ -28,19 +29,17 @@ declare module "../../Nostr" {
        * };
        * ```
        */
-      interface WellKnownResponse<P extends pubkey | "relays" = pubkey> {
+      interface WellKnownResponse<P extends E.pubkey | "relays" = E.pubkey> {
         names: {
-          [k: string]: pubkey;
+          [k: string]: E.pubkey;
         };
         relays?: {
-          [k in pubkey]: string[];
+          [k in E.pubkey]: string[];
         };
       }
     }
   }
 }
-const Nip = N.Nips.Nip;
-const nipTitles = N.Nips.nipTitles;
 
 /**
  * NIP-05

@@ -1,4 +1,5 @@
-import { Nostr as N } from "../../Nostr";
+import { nipTitles, Nip } from "../../Nips";
+import { KindDefinition as Kind, kinds } from "../../Kinds";
 
 declare module "../../Nostr" {
   namespace Nostr {
@@ -15,11 +16,6 @@ declare module "../../Nostr" {
     }
   }
 }
-
-const Nip = N.Nips.Nip;
-const nipTitles = N.Nips.nipTitles;
-const Kind = N.Kinds.KindDefinition;
-const kinds = N.Kinds.kinds;
 
 /**
  * NIP-04
