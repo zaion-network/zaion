@@ -1,0 +1,1 @@
+export { ModuleEntrypoinSrcFolderRule } from "./EntrypoinSrcModuleFolder";
