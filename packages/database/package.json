@@ -1,0 +1,10 @@
+{
+  "name": "@zaionstate/database",
+  "version": "0.0.0",
+  "private": true,
+  "source": "src/index.ts",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@zaionstate/zaionbase": "^0.0.1"
+  }
+}

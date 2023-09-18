@@ -1,0 +1,1 @@
+export { execSync } from "./execSync";

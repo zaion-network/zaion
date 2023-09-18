@@ -1,0 +1,306 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "integer"
+    },
+    "url": {
+      "type": "string"
+    },
+    "headers": {
+      "type": "object",
+      "properties": {
+        "access-control-allow-origin": {
+          "type": "string"
+        },
+        "access-control-expose-headers": {
+          "type": "string"
+        },
+        "cache-control": {
+          "type": "string"
+        },
+        "connection": {
+          "type": "string"
+        },
+        "content-encoding": {
+          "type": "string"
+        },
+        "content-security-policy": {
+          "type": "string"
+        },
+        "content-type": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "etag": {
+          "type": "string"
+        },
+        "last-modified": {
+          "type": "string"
+        },
+        "referrer-policy": {
+          "type": "string"
+        },
+        "server": {
+          "type": "string"
+        },
+        "strict-transport-security": {
+          "type": "string"
+        },
+        "transfer-encoding": {
+          "type": "string"
+        },
+        "vary": {
+          "type": "string"
+        },
+        "x-accepted-oauth-scopes": {
+          "type": "string"
+        },
+        "x-content-type-options": {
+          "type": "string"
+        },
+        "x-frame-options": {
+          "type": "string"
+        },
+        "x-github-media-type": {
+          "type": "string"
+        },
+        "x-github-request-id": {
+          "type": "string"
+        },
+        "x-oauth-scopes": {
+          "type": "string"
+        },
+        "x-ratelimit-limit": {
+          "type": "string"
+        },
+        "x-ratelimit-remaining": {
+          "type": "string"
+        },
+        "x-ratelimit-reset": {
+          "type": "string"
+        },
+        "x-ratelimit-resource": {
+          "type": "string"
+        },
+        "x-ratelimit-used": {
+          "type": "string"
+        },
+        "x-xss-protection": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "access-control-allow-origin",
+        "access-control-expose-headers",
+        "cache-control",
+        "connection",
+        "content-encoding",
+        "content-security-policy",
+        "content-type",
+        "date",
+        "etag",
+        "last-modified",
+        "referrer-policy",
+        "server",
+        "strict-transport-security",
+        "transfer-encoding",
+        "vary",
+        "x-accepted-oauth-scopes",
+        "x-content-type-options",
+        "x-frame-options",
+        "x-github-media-type",
+        "x-github-request-id",
+        "x-oauth-scopes",
+        "x-ratelimit-limit",
+        "x-ratelimit-remaining",
+        "x-ratelimit-reset",
+        "x-ratelimit-resource",
+        "x-ratelimit-used",
+        "x-xss-protection"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "node_id": {
+          "type": "string"
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "gravatar_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "html_url": {
+          "type": "string"
+        },
+        "followers_url": {
+          "type": "string"
+        },
+        "following_url": {
+          "type": "string"
+        },
+        "gists_url": {
+          "type": "string"
+        },
+        "starred_url": {
+          "type": "string"
+        },
+        "subscriptions_url": {
+          "type": "string"
+        },
+        "organizations_url": {
+          "type": "string"
+        },
+        "repos_url": {
+          "type": "string"
+        },
+        "events_url": {
+          "type": "string"
+        },
+        "received_events_url": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "site_admin": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "company": {
+          "type": "null"
+        },
+        "blog": {
+          "type": "string"
+        },
+        "location": {
+          "type": "null"
+        },
+        "email": {
+          "type": "string"
+        },
+        "hireable": {
+          "type": "null"
+        },
+        "bio": {
+          "type": "null"
+        },
+        "twitter_username": {
+          "type": "null"
+        },
+        "public_repos": {
+          "type": "integer"
+        },
+        "public_gists": {
+          "type": "integer"
+        },
+        "followers": {
+          "type": "integer"
+        },
+        "following": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "private_gists": {
+          "type": "integer"
+        },
+        "total_private_repos": {
+          "type": "integer"
+        },
+        "owned_private_repos": {
+          "type": "integer"
+        },
+        "disk_usage": {
+          "type": "integer"
+        },
+        "collaborators": {
+          "type": "integer"
+        },
+        "two_factor_authentication": {
+          "type": "boolean"
+        },
+        "plan": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "space": {
+              "type": "integer"
+            },
+            "collaborators": {
+              "type": "integer"
+            },
+            "private_repos": {
+              "type": "integer"
+            }
+          },
+          "required": ["name", "space", "collaborators", "private_repos"]
+        }
+      },
+      "required": [
+        "login",
+        "id",
+        "node_id",
+        "avatar_url",
+        "gravatar_id",
+        "url",
+        "html_url",
+        "followers_url",
+        "following_url",
+        "gists_url",
+        "starred_url",
+        "subscriptions_url",
+        "organizations_url",
+        "repos_url",
+        "events_url",
+        "received_events_url",
+        "type",
+        "site_admin",
+        "name",
+        "company",
+        "blog",
+        "location",
+        "email",
+        "hireable",
+        "bio",
+        "twitter_username",
+        "public_repos",
+        "public_gists",
+        "followers",
+        "following",
+        "created_at",
+        "updated_at",
+        "private_gists",
+        "total_private_repos",
+        "owned_private_repos",
+        "disk_usage",
+        "collaborators",
+        "two_factor_authentication",
+        "plan"
+      ]
+    }
+  },
+  "required": ["status", "url", "headers", "data"]
+}

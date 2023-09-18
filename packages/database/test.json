@@ -1,0 +1,53 @@
+[
+  {
+    "id": "276ad790e608d4a930dd3b727288e1b6bdb51db2",
+    "tree": "832b1044628fa7216efcb02fa93cffbf9a555737",
+    "refs": "HEAD -> edit-NewGit.ts, tag: tagname",
+    "parents": ["fd66331497878466d16bbc6db43801bf0c3933d3"]
+  },
+  {
+    "id": "fd66331497878466d16bbc6db43801bf0c3933d3",
+    "tree": "d3640c60fecb08647598a1348b492cac2c84bbca",
+    "refs": "src/Git/ZaionGit/Method.ts",
+    "parents": ["c7465bbfabae99e7c29e650c2c90f6c8f000efd2"]
+  },
+  {
+    "id": "c7465bbfabae99e7c29e650c2c90f6c8f000efd2",
+    "tree": "e7ba4dada20a21fb0ff454b15ed35ce4b766f9c5",
+    "refs": "old",
+    "parents": ["b08e9167d0749ec03b626cee0c49b504305b5001"]
+  },
+  {
+    "id": "b08e9167d0749ec03b626cee0c49b504305b5001",
+    "tree": "8b8c449807bbfd1172b21587b6c739e4fe4031e6",
+    "refs": "new-Method",
+    "parents": ["821d98d577fe5bd304e02a0d04b6a7c72b8ce5a4"]
+  },
+  {
+    "id": "821d98d577fe5bd304e02a0d04b6a7c72b8ce5a4",
+    "tree": "9816e617149a1fcf1ded9c2b0efb6ff386efb02f",
+    "refs": "delete-stuff",
+    "parents": ["6c4528b9b9d3204295806d24635dd5fb6527c3fc"]
+  },
+  {
+    "id": "a2378e3bf52b41ee8afa0507eb451cac5ff77417",
+    "tree": "bb80394d83c3141a4f755cc54f7420002e08dc3d",
+    "refs": "refs/stash",
+    "parents": [
+      "6c4528b9b9d3204295806d24635dd5fb6527c3fc",
+      "458d59c4be89041e41ebe684fec9a10548f2a92a"
+    ]
+  },
+  {
+    "id": "458d59c4be89041e41ebe684fec9a10548f2a92a",
+    "tree": "bb80394d83c3141a4f755cc54f7420002e08dc3d",
+    "refs": "",
+    "parents": ["6c4528b9b9d3204295806d24635dd5fb6527c3fc"]
+  },
+  {
+    "id": "6c4528b9b9d3204295806d24635dd5fb6527c3fc",
+    "tree": "91882200c77c9f244bc9836ea9faffa9f53ded72",
+    "refs": "stage, main, dev",
+    "parents": [""]
+  }
+]
