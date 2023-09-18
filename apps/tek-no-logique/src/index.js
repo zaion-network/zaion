@@ -1,5 +1,6 @@
 console.log("tek no logique rules");
 console.log(document.documentElement.clientWidth);
+import * as secp from "https://unpkg.com/@noble/secp256k1"; // Unpkg
 
 class App extends EventTarget {
   constructor() {
@@ -58,7 +59,7 @@ const showNostrPopup = () => {
   container.appendChild(button);
   body.appendChild(container);
 };
-const showAboutPage = (how) => {
+const showAboutPage = how => {
   const message = `Tek No Logique Records, since 2001.
 We are an indipendent record label.
 We believe in freedom and music!
@@ -83,7 +84,7 @@ Subscribe for more news`;
     how(message);
   }
 };
-const createUl = (list) => {
+const createUl = list => {
   const FONTROBOTO = "fontRoboto";
   const ul = document.createElement("ul");
   ul.className = "p0 mt10rem";
@@ -92,7 +93,7 @@ const createUl = (list) => {
   title.className = FONTROBOTO;
   title.textContent = "cooking in the yard a store bringing you:";
   ul.appendChild(title);
-  list.forEach((e) => {
+  list.forEach(e => {
     const li = document.createElement("li");
     li.textContent = e;
     li.className = FONTROBOTO;
@@ -100,12 +101,22 @@ const createUl = (list) => {
   });
   return ul;
 };
-const createPis = (list) => {
-  const pis = list.map((e) => {
+const createPis = list => {
+  const pis = list.map(e => {
     const pi = document.createElement("p");
     pi.className = "fontRoboto mt2rem";
     pi.textContent = e;
     return pi;
+  });
+  return pis;
+};
+
+const createLogoPis = list => {
+  const pis = list.map(e => {
+    const pi = document.createElement("p");
+    const FONTROBOTO = "fontRoboto";
+    pi.className = FONTROBOTO;
+    pi.textContent = e;
   });
   return pis;
 };
@@ -134,6 +145,13 @@ const player = document.getElementById("player");
 const playBtn = document.getElementById("play-btn");
 
 window.addEventListener("DOMContentLoaded", () => {
+  const logoPis = createLogoPis([
+    "you can bust the party but you can't stop the vibe",
+    "free party for no drugs people",
+  ]);
+  logoPis.forEach(e => {
+    body.appendChild(e);
+  });
   const ul = createUl([
     "music",
     "vinyl",
@@ -157,7 +175,7 @@ window.addEventListener("DOMContentLoaded", () => {
     "if you are a label and you are interested in rejoining our network and learn out to use our open source tools, join us!! links below ⬇️",
     "if you are a developer and you are interested in helping us building open source tools, join us!! links below ⬇️",
   ]);
-  pis.forEach((p) => body.appendChild(p));
+  pis.forEach(p => body.appendChild(p));
   const footer = createFooter();
   body.appendChild(footer);
   const logo = document.getElementById("logo");
@@ -191,7 +209,7 @@ window.addEventListener("DOMContentLoaded", () => {
     "class",
     `${map.get(false)} cur_p ps_end p_f w_fc r_1rem t_calc1`
   );
-  playBtn.addEventListener("click", (e) => {
+  playBtn.addEventListener("click", e => {
     const condition = e.target.className.includes(pauseclass);
     e.target.setAttribute(
       "class",
@@ -223,15 +241,15 @@ window.addEventListener("DOMContentLoaded", () => {
     };
     try {
       new UserInput(promptWip())
-        .sanitizeEmail((answer) => {
+        .sanitizeEmail(answer => {
           if (answer === null) {
             throw Error("rejected");
           } else return answer;
         })
-        .encryptEmail((sanitizedInput) => {
+        .encryptEmail(sanitizedInput => {
           return sanitizedInput;
         })
-        .send((ecryptedInput) => {
+        .send(ecryptedInput => {
           try {
             window.confirm(
               `thank you for subscribing with this address: ${answer}`
@@ -291,7 +309,7 @@ window.addEventListener("DOMContentLoaded", () => {
   ];
 
   links
-    .map((data) => {
+    .map(data => {
       const a = document.createElement("a");
       a.setAttribute("target", data.target);
       a.setAttribute("id", data.id);
@@ -299,12 +317,12 @@ window.addEventListener("DOMContentLoaded", () => {
       a.textContent = data.text;
       return a;
     })
-    .forEach((e) => footer.appendChild(e));
+    .forEach(e => footer.appendChild(e));
 
   const about = document.getElementById("about");
-  about.addEventListener("click", (e) => {
+  about.addEventListener("click", e => {
     e.preventDefault();
-    showAboutPage((message) => {
+    showAboutPage(message => {
       window.confirm(message);
     });
   });
@@ -324,6 +342,115 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log(player.volume);
   });
   loadPlayer();
+
+  function hexStringToUint8Array(hexString) {
+    const length = hexString.length / 2;
+    const uint8Array = new Uint8Array(length);
+
+    for (let i = 0; i < length; i++) {
+      const byteValue = parseInt(hexString.substr(i * 2, 2), 16);
+      uint8Array[i] = byteValue;
+    }
+
+    return uint8Array;
+  }
+
+  const bufferToHex = buffer => {
+    return Array.from(buffer)
+      .map(byte => byte.toString(16).padStart(2, "0"))
+      .join("");
+  };
+
+  const makePrivateAndPublicKeys = secp => {
+    const sk = secp.utils.randomPrivateKey();
+    const pk = secp.getPublicKey(sk);
+    if (!secp.utils.isValidPrivateKey(sk))
+      throw new Error(
+        "There was a problem while generating the key which was not valid"
+      );
+    return { sk, pk };
+  };
+
+  const createIV = () => {
+    return crypto.getRandomValues(new Uint8Array(16));
+  };
+
+  const convertSecret = async secret => {
+    return await window.crypto.subtle.importKey(
+      "raw",
+      secret,
+      "AES-CBC",
+      false,
+      ["encrypt", "decrypt"]
+    );
+  };
+
+  const encryptData = async (text, convertedSecret, iv) => {
+    return await window.crypto.subtle.encrypt(
+      {
+        name: "AES-CBC",
+        iv: iv,
+      },
+      convertedSecret,
+      new TextEncoder().encode(text)
+    );
+  };
+
+  const makesomething = secp => {
+    const { pk: pk1, sk: sk1 } = makePrivateAndPublicKeys(secp);
+    const { pk: pk2, sk: sk2 } = makePrivateAndPublicKeys(secp);
+    console.log(bufferToHex(sk1));
+    console.log(bufferToHex(pk1));
+    const isValid = secp.utils.isValidPrivateKey(sk1);
+    console.log(isValid);
+  };
+
+  const nostrTools = tools => {
+    const {
+      validateEvent,
+      verifySignature,
+      getSignature,
+      getEventHash,
+      getPublicKey,
+      relayInit,
+      generatePrivateKey,
+    } = tools;
+
+    const signEvent = (
+      { kind, created_at, tags, content, pubkey },
+      getEventHash,
+      getSignature,
+      validateEvent,
+      verifySignature
+    ) => {
+      let event = {
+        kind,
+        created_at,
+        tags,
+        content,
+        pubkey,
+      };
+
+      event.id = getEventHash(event);
+      event.sig = getSignature(event, privateKey);
+
+      let ok = validateEvent(event);
+      let veryOk = verifySignature(event);
+      if (!ok || !veryOk) throw new Error("not good in signEvent");
+      return event;
+    };
+  };
+  // makesomething(secp);
+  const TNLPUB =
+    "49fd86bcb4f59963a2eea88449b46716cc606b53be62b13cd450a7ee9cbd92fc";
+  const SEC = process.env.SEC;
+  const PUB = process.env.PUB;
+  console.log(SEC);
+  console.log(PUB);
+  const isValid = secp.utils.isValidPrivateKey(SEC);
+  const condition = window.NostrTools !== undefined;
+  console.log(condition);
+  if (condition) nostrTools(window.NostrTools);
 });
 
 // prova fine
