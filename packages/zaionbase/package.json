@@ -9,9 +9,12 @@
     "url": "https://github.com/zaion-network/zaionbase.git"
   },
   "scripts": {
-    "build": "bun build ./src/index.js --outdir ./dist --target browser --watch"
+    "build": "./build.ts"
   },
   "devDependencies": {
     "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }
