@@ -1,0 +1,21 @@
+{
+  "name": "@zaion_network/spesa",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
+    "build": "bun build ./src/index.js --outdir ./dist --target browser"
+  },
+  "dependencies": {
+    "@zaionstate/zaionbase": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "5.2.2"
+  }
+}
