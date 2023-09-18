@@ -4,6 +4,7 @@
   "private": true,
   "description": "Zaion Zaionbase",
   "source": "src/index.ts",
+  "types": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/zaion-network/zaionbase.git"

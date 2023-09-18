@@ -6,6 +6,9 @@
 // import { HigherUtilities as HU } from "/Users/WAW/Documents/Projects/zaion-network-state/packages/zaionbase/src/using DeeperUtilities/using DeepUtilites/using LowUtilities/using Utilities/using HighUtilities/HigherUtilites";
 export { tester } from "./utils/tester";
 
+export { Types, reverse } from "./Types/Types"
+export { Graph } from "./Types/DataStructures"
+
 // import { Method as M } from "./Method";
 
 // export import Update = U;
