@@ -327,7 +327,7 @@ const nextButton = app.get(nextBtnDesignPath).element;
 // styling
 
 const minWidth768Handler = (_, data) => {
-  const LARGE_CLASS = "flex flex-row flex-nowrap of_xa";
+  const LARGE_CLASS = "flex flex-row flex-nowrap of_xa mh_40rem";
   const DEF_CLASS = "flex flex-column flex-wrap ac_c";
   if (data.matches) productScroll.className = LARGE_CLASS;
   else productScroll.className = DEF_CLASS;
