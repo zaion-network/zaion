@@ -117,6 +117,7 @@ const createLogoPis = list => {
     const FONTROBOTO = "fontRoboto";
     pi.className = FONTROBOTO;
     pi.textContent = e;
+    return pi;
   });
   return pis;
 };
