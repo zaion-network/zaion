@@ -2,10 +2,8 @@
   "name": "zaion",
   "version": "0.0.1",
   "private": true,
-  "bolt": {
-    "workspaces": [
-      "apps/*",
-      "packages/*"
-    ]
-  }
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
