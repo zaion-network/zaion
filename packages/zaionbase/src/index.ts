@@ -76,5 +76,5 @@ export import Test = T;
 export const TestValues = T;
 
 declare module "./index" {
-  namespace DeeperUtilities {}
+  namespace DeeperUtilities { }
 }

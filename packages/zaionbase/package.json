@@ -4,35 +4,17 @@
   "private": true,
   "description": "Zaion Zaionbase",
   "source": "src/index.ts",
-  "main": "dist/zaionstate-zaionbase.cjs.js",
-  "module": "dist/zaionstate-zaionbase.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/zaion-network/zaionbase.git"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "fix:pre": "preconstruct fix",
-    "fix": "yarn fix:pre",
-    "build:pkg": "preconstruct build",
-    "build": "yarn build:pkg",
-    "dev:watch": "preconstruct watch",
-    "dev": "yarn dev:watch"
+    "build": "./build.ts"
   },
   "devDependencies": {
-    "@babel/plugin-transform-typescript": "7.22.15",
-    "@babel/preset-env": "7.22.15",
-    "@babel/preset-typescript": "7.22.15",
-    "@preconstruct/cli": "2.8.1"
+    "bun-types": "latest"
   },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "web.ts"
-    ]
-  },
-  "files": [
-    "dist",
-    "web"
-  ]
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
 }

@@ -1,4 +1,0 @@
-{
-  "main": "dist/zaionstate-zaionbase-web.cjs.js",
-  "module": "dist/zaionstate-zaionbase-web.esm.js"
-}
