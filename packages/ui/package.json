@@ -4,11 +4,11 @@
   "source": "src/index.ts",
   "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
   "license": "MIT",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
   "scripts": {
     "build": "./build.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "5.2.2"
