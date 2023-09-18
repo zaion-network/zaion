@@ -2,9 +2,16 @@
   "name": "@zaionstate/database",
   "version": "0.0.0",
   "private": true,
-  "source": "src/index.ts",
-  "main": "src/index.ts",
+  "scripts": {
+    "build": "./build.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "5.2.2"
+  },
   "dependencies": {
-    "@zaionstate/zaionbase": "^0.0.1"
+    "@zaionstate/zaionbase": "workspace:*"
   }
 }
