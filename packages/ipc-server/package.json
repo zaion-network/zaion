@@ -3,5 +3,14 @@
   "version": "0.0.0",
   "main": "index.ts",
   "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "./build.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "5.2.2"
+  }
 }
