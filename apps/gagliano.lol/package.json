@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "yarn rollup -c rollup.config.js --watch"
+    "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
+    "build": "bun build ./src/index.js --outdir ./dist --target browser"
   }
 }
