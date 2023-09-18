@@ -1,4 +1,5 @@
-import { HighUtilities } from "../HighUtilities";
+import { Conditioner } from "../../../../Conditioner";
+import { Action } from "../../../Action";
 
 export interface Application<A extends Array<any>, R, C> {
   blocks: Application.Block<A, R, C>[];
@@ -25,7 +26,7 @@ export class Application<A extends Array<any>, R, C>
   }
   run(): this {
     const nodes = [...this.nodes];
-    const firstEl = nodes[0];
+    const firstEl = nodes[0]!;
     if (firstEl.isBlock()) {
       const result = Application.startExecution(this, firstEl);
       return this;
@@ -34,7 +35,7 @@ export class Application<A extends Array<any>, R, C>
   }
 }
 export namespace Application {
-  const conditioner = new HighUtilities.Conditioner();
+  const conditioner = new Conditioner();
   export interface Application<A extends Array<any>, R, C> {
     blocks: Application.Block<A, R, C>[];
     conditions: Application.Condition<A, R, C>[];
@@ -74,7 +75,7 @@ export namespace Application {
     result: R,
     conditions: Condition<A, R, C>[]
   ): Condition<A, R, C> => {
-    return conditions.filter(filterCorrectCondition(result))[0];
+    return conditions.filter(filterCorrectCondition(result))[0]!;
   };
 
   export const filterCorrectCondition =
@@ -163,7 +164,7 @@ export namespace Application {
 
   export interface Block<A extends any[], R, C> extends Node<A, R, C> {
     type: Node.types.block;
-    action: HighUtilities.Action.genericAction<A, R>;
+    action: Action.genericAction<A, R>;
     args: A;
     conditions: Condition<A, R, C>[];
     addCondition(condition: Condition<A, R, C>): this;
@@ -173,10 +174,7 @@ export namespace Application {
     extends Node<A, R, C>
     implements Block.Block<A, R, C>
   {
-    constructor(
-      public action: HighUtilities.Action.genericAction<A, R>,
-      public args: A
-    ) {
+    constructor(public action: Action.genericAction<A, R>, public args: A) {
       super(Node.types.block);
       this.conditions = [];
     }
@@ -202,6 +200,6 @@ export namespace Application {
   // export const Action = A;
   // export namespace Action {}
 
-  export const Result = HighUtilities.Context.Result;
+  // export const Result = HighUtilities.Context.Result;
   export namespace Result {}
 }

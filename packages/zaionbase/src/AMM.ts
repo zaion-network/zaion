@@ -193,8 +193,8 @@ export class Client extends TokenHolder implements IClient {
   }
   paydev(dev: Developer, amount: number) {
     console.log(`${dev.name} will get: ${amount} platformtokens`);
-    const token = this.tokens.filter((t) => t.name === "projectToken");
-    token[0].transferFrom(this, dev, amount);
+    const token = this.tokens.filter(t => t.name === "projectToken");
+    token[0]?.transferFrom(this, dev, amount);
   }
   showbalance() {
     console.log(this.tokenbalance);

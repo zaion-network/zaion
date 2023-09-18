@@ -4,10 +4,10 @@ import { Crypto as C } from "./Node/Crypto";
 import { Path as P } from "./Node/Path";
 import { Https as Hs } from "./Node/Https";
 
-declare module "./Node/FileSystem" {}
-declare module "./Node/ChildProcess" {}
-declare module "./Node/Crypto" {}
-declare module "./Node/Path" {}
+// declare module "./Node/FileSystem" {}
+// declare module "./Node/ChildProcess" {}
+// declare module "./Node/Crypto" {}
+// declare module "./Node/Path" {}
 declare module "./Node" {
   export namespace Node {
     export import FileSystem = FS;

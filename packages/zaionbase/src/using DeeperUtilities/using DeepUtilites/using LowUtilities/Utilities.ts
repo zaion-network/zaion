@@ -1,18 +1,18 @@
-import { Cache as cache } from "../../../../IPC Server/Cache";
+// import { Cache as cache } from "../../../../IPC Server/Cache";
 // import { BasicClass as BC } from "../BasicClass";
 import { MethodWithStrategies as MWS } from "./MethodWithStrategy";
 import { LowUtilities as L } from "../LowUtilities";
 
 declare module "./MethodWithStrategy" {}
-declare module "../../../../IPC Server/Cache" {}
+// declare module "../../../../IPC Server/Cache" {}
 declare module "../LowUtilities" {
   export namespace LowUtilities {
     export import MethodWithStrategies = MWS;
-    export var Cache: typeof cache;
+    // export var Cache: typeof cache;
   }
 }
 
-L.Cache = cache;
+// L.Cache = cache;
 L.MethodWithStrategies = MWS;
 
 // export class Utilities extends LowUtilities {}

@@ -1,37 +1,56 @@
 import { existsSync, rmSync } from "fs";
-import { HighUtilities } from "../../HighUtilities";
+
+import type { Node } from "../../../../../../Node";
+import { Conditioner } from "../../../../../Conditioner";
+
 import { ReaddirSync as RDS } from "./FileSystem/ReaddirSync";
 import { StatsSync as SS } from "./FileSystem/StatsSync";
 
-declare module "./FileSystem/ReaddirSync" {}
-declare module "./FileSystem/StatsSync" {}
+export const ReaddirSync = RDS;
+export const StatsSync = SS;
 
-export class FileSystem {}
-
-export namespace FileSystem {
-  const conditioner = new HighUtilities.Conditioner();
-  const mv = HighUtilities.Conditioner.makeValidations;
-  export const checkFileExists: (path: string) => Promise<boolean> = (path) => {
-    return new Promise((resolve) => {
-      existsSync(path) ? resolve(true) : resolve(false);
-    });
-  };
-  export interface checkAndRemove {
-    (path: string): any;
+declare module "../../../../../../Node" {
+  namespace Node {
+    interface FileSystem {
+      checkFileExists: FileSystem.checkFileExists;
+      checkAndRemove: FileSystem.checkAndRemove;
+      ReaddirSync: typeof RDS;
+      StatsSync: typeof SS;
+    }
+    namespace FileSystem {
+      interface checkAndRemove {
+        (path: string): any;
+      }
+      interface checkFileExists {
+        (path: string): Promise<boolean>;
+      }
+      export import StatsSync = SS;
+      export import ReaddirSync = RDS;
+    }
   }
-  export const checkAndRemove: checkAndRemove = (path) => {
-    const ifTrue = () => {
-      rmSync(path);
-      return true;
-    };
-    const bool: HighUtilities.Conditioner.booleanCondition = [
-      existsSync(path),
-      mv([ifTrue, []], [() => false, []]),
-    ];
-    return conditioner.boolean(bool);
+}
+
+export const checkFileExists: Node.FileSystem.checkFileExists = path => {
+  return new Promise(resolve => {
+    existsSync(path) ? resolve(true) : resolve(false);
+  });
+};
+
+const conditioner = new Conditioner();
+const mv = Conditioner.makeValidations;
+export const checkAndRemove: Node.FileSystem.checkAndRemove = path => {
+  const ifTrue = () => {
+    rmSync(path);
+    return true;
   };
-
+  const bool: Conditioner.booleanCondition = [
+    existsSync(path),
+    mv([ifTrue, []], [() => false, []]),
+  ];
+  return conditioner.boolean(bool);
+};
+export class FileSystem {}
+export namespace FileSystem {
   export import StatsSync = SS;
-
   export import ReaddirSync = RDS;
 }

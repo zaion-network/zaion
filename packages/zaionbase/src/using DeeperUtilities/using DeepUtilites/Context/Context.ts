@@ -1,12 +1,9 @@
-import { Context as C } from "../../../Context";
-import { DeepUtilities } from "../../DeepUtilities";
-
 declare module "../../../Context" {
   export namespace Context {}
 }
 
 export namespace NewContext {
-  const MixEvo = DeepUtilities.Mixins.MixEvo;
+  // const MixEvo = DeepUtilities.Mixins.Mixins.Mix;
   export interface Context<V> {
     value: V;
   }

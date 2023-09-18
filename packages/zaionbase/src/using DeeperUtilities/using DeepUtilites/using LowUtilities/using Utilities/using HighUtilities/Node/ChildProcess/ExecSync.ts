@@ -1,15 +1,43 @@
 import { execSync } from "child_process";
-import { HighUtilities } from "../../../HighUtilities";
+import { Result } from "../../../../../../../Context/GenericContext/WithChangeState/Result";
+import { BasicClass } from "../../../../../BasicClass";
+
+declare module "./ExecSync" {
+  namespace ExecSync {
+    interface ExecSync<T extends Buffer | string | string[] | undefined> {
+      type: types;
+      command: string;
+      options: {
+        maxBuffer: number;
+      };
+      digest(): T;
+    }
+
+    interface ExecSyncBuffer extends ExecSync<Buffer> {
+      format(): ExecSync.ExecSyncString;
+    }
+
+    interface ExecSyncString extends ExecSync<string> {
+      split(splitter: ExecSync.splitters): ExecSync.ExecSyncStringArray;
+    }
+
+    interface ExecSyncStringArray extends ExecSync<string[]> {}
+
+    interface ExecSyncUndefined extends ExecSync<undefined> {
+      run(): ExecSync.ExecSyncBuffer;
+    }
+  }
+}
 
 export interface ExecSync<T extends Buffer | string | string[] | undefined>
   extends ExecSync.ExecSync<T> {}
 
 export class ExecSync<T extends Buffer | string | string[] | undefined>
-  extends HighUtilities.BasicClass
+  extends BasicClass
   implements ExecSync.ExecSync<T>
 {
   #safeGuardError = this.conditioner.safeGuardError;
-  #newResult: HighUtilities.Context.Result.Result<T>;
+  #newResult: Result<T>;
   constructor(
     public command: string,
     public options: {
@@ -17,7 +45,7 @@ export class ExecSync<T extends Buffer | string | string[] | undefined>
     }
   ) {
     super();
-    this.#newResult = new HighUtilities.Context.Result<T>();
+    this.#newResult = new Result<T>();
   }
   run(): ExecSync.ExecSyncBuffer {
     new ExecSync.Fullfilled(
@@ -45,10 +73,8 @@ export class ExecSync<T extends Buffer | string | string[] | undefined>
       ExecSync.ExecSyncErrors.notstring,
     ]);
     new ExecSync.Fullfilled(
-      (
-        this.#newResult as HighUtilities.Context.Result.Result<string>
-      ).value!.split(splitter),
-      this.#newResult as HighUtilities.Context.Result.Result<string[]>
+      (this.#newResult as Result<string>).value!.split(splitter),
+      this.#newResult as Result<string[]>
     );
     return this as ExecSync.ExecSyncStringArray;
   }
@@ -58,14 +84,6 @@ export class ExecSync<T extends Buffer | string | string[] | undefined>
   }
 }
 export namespace ExecSync {
-  export interface ExecSync<T extends Buffer | string | string[] | undefined> {
-    type: types;
-    command: string;
-    options: {
-      maxBuffer: number;
-    };
-    digest(): T;
-  }
   export enum types {
     buffer = "buffer",
     string = "string",
@@ -82,19 +100,5 @@ export namespace ExecSync {
     notstring = "result is not a strings",
   }
 
-  export const Fullfilled = HighUtilities.Context.Result.ResultState.Fullfilled;
-
-  export interface ExecSyncBuffer extends ExecSync<Buffer> {
-    format(): ExecSync.ExecSyncString;
-  }
-
-  export interface ExecSyncString extends ExecSync<string> {
-    split(splitter: ExecSync.splitters): ExecSync.ExecSyncStringArray;
-  }
-
-  export interface ExecSyncStringArray extends ExecSync<string[]> {}
-
-  export interface ExecSyncUndefined extends ExecSync<undefined> {
-    run(): ExecSync.ExecSyncBuffer;
-  }
+  export const Fullfilled = Result.ResultState.Fullfilled;
 }

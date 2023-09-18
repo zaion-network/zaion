@@ -1,13 +1,13 @@
-import { Utilities } from "../Utilities";
+import { MethodWithStrategies } from "../MethodWithStrategy";
 
 export interface MapFromJson
-  extends Utilities.MethodWithStrategies<
+  extends MethodWithStrategies<
     typeof MapFromJson.parseMapFromJsonStrategies,
     MapFromJson.strategies
   > {}
 export class MapFromJson<
   S extends MapFromJson.strategiesKeys = MapFromJson.strategiesKeys
-> extends Utilities.MethodWithStrategies<
+> extends MethodWithStrategies<
   typeof MapFromJson.parseMapFromJsonStrategies,
   MapFromJson.strategies
 > {
@@ -34,10 +34,10 @@ export namespace MapFromJson {
     reduce: parseMapFromJson;
   }
 
-  export const parse: parseMapFromJson = (json) => {
+  export const parse: parseMapFromJson = json => {
     return new Map(JSON.parse(json));
   };
-  export const reduce: parseMapFromJson = (json) => {
+  export const reduce: parseMapFromJson = json => {
     let parsed = JSON.parse(json) as [unknown, unknown][];
     return new Map(
       parsed.reduce((acc, [key, value]) => {
@@ -46,6 +46,6 @@ export namespace MapFromJson {
       }, new Map<unknown, unknown>())
     );
   };
-  export let parseMapFromJson: parseMapFromJson = new MapFromJson("parse")
+  export const parseMapFromJson: parseMapFromJson = new MapFromJson("parse")
     .execute;
 }

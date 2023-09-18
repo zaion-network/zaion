@@ -1,4 +1,5 @@
-import { LowUtilities } from "../LowUtilities";
+import { FunctionTypes } from "../../../FunctionTypes";
+import { BasicClass } from "../BasicClass";
 
 export interface MethodWithStrategies<
   T,
@@ -42,7 +43,7 @@ export class MethodWithStrategies<
       SelectedKey
     >
   >
-  extends LowUtilities.BasicClass
+  extends BasicClass
   implements
     MethodWithStrategies.IMethodWithStrategies<
       T,
@@ -106,7 +107,7 @@ export namespace MethodWithStrategies {
     Selected,
     Params,
     Return
-  > extends LowUtilities.BasicClass {
+  > extends BasicClass {
     execute: Selected;
   }
 
@@ -136,9 +137,8 @@ export namespace MethodWithStrategies {
     ): void;
   }
 
-  interface isClass
-    extends LowUtilities.BasicClass.GenericFunction<[any], boolean> {}
+  interface isClass extends FunctionTypes.GenericFunction<[any], boolean> {}
 
-  export const isClass: isClass = (value) =>
+  export const isClass: isClass = value =>
     /^class\s/.test(Function.prototype.toString.call(value));
 }

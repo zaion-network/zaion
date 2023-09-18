@@ -1,8 +1,3 @@
-import {
-  GConstructor as GC,
-  AnyCtor_v1 as AC,
-  InferInstance as II,
-} from "/Users/WAW/Documents/Projects/zaion-network-state/packages/zaionbase/src/zionbase/Types/Constructors/Constructors_v1";
 import { Types } from "./Types/Types";
 
 declare module "./FunctionTypes" {
@@ -30,8 +25,8 @@ declare module "./FunctionTypes" {
        * parameters which describe the interface of the
        * returned instance.
        */
-      type GConstructor<T> = GC<T>;
-      type AnyCtor = AC;
+      type GConstructor<T> = Types.Class.GConstructor<T>;
+      type AnyCtor = Types.Class.AnyCtor_v1;
       type Ctor<C extends readonly any[], T> = new (...args: C) => T;
 
       /**
@@ -45,7 +40,8 @@ declare module "./FunctionTypes" {
         ...args: C
       ) => Types.Record.GenericRecord<V>;
 
-      type InferInstance<t extends new (...args: any) => any> = II<t>;
+      type InferInstance<t extends new (...args: any) => any> =
+        Types.Class.InferInstance<t>;
       type flattenCtor<C> = C extends Ctor<infer A, infer V>
         ? [A, Types.flatten<V>]
         : never;

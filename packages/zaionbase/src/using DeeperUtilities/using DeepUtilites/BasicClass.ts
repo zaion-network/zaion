@@ -1,15 +1,13 @@
-import { DeepUtilities } from "../DeepUtilities";
+import { Conditioner as C } from "../Conditioner";
 
 export class BasicClass {
-  static makeValidations = DeepUtilities.Conditioner.makeValidations;
-  static makeActionAndArgs = DeepUtilities.Conditioner.makeActionAndArgs;
-  conditioner = new DeepUtilities.Conditioner();
+  conditioner = new C();
 }
 export namespace BasicClass {
-  export type action = DeepUtilities.Conditioner.action;
-  export type actionAndArgs = DeepUtilities.Conditioner.actionAndArgs;
-  export type GenericFunction<
-    A extends any[],
-    R
-  > = DeepUtilities.Conditioner.GenericFunction<A, R>;
+  export type action = C.action;
+  export type actionAndArgs = C.actionAndArgs;
+  export type GenericFunction<A extends any[], R> = C.GenericFunction<A, R>;
+  export const Conditioner = C;
+  // export const makeValidations = DeepUtilities.Conditioner.makeValidations;
+  // export const makeActionAndArgs = DeepUtilities.Conditioner.makeActionAndArgs;
 }

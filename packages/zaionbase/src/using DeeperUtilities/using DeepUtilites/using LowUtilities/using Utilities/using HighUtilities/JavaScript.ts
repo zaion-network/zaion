@@ -7,13 +7,13 @@ import { Promise_utils as PU } from "./JavaScript/Promise_Utils";
 import { StringUtils as SU } from "./JavaScript/StringUtils";
 import { RegExpUtils as REU } from "./JavaScript/RegExpUtils";
 
-declare module "./JavaScript/ArrayUtils" {}
-declare module "./JavaScript/ObjectUtils" {}
-declare module "./JavaScript/MapUtils" {}
-declare module "./JavaScript/ClassUtils" {}
-declare module "./JavaScript/JSONUtils" {}
-declare module "./JavaScript/Promise_Utils" {}
-declare module "./JavaScript/StringUtils" {}
+// declare module "./JavaScript/ArrayUtils" {}
+// declare module "./JavaScript/ObjectUtils" {}
+// declare module "./JavaScript/MapUtils" {}
+// declare module "./JavaScript/ClassUtils" {}
+// declare module "./JavaScript/JSONUtils" {}
+// declare module "./JavaScript/Promise_Utils" {}
+// declare module "./JavaScript/StringUtils" {}
 declare module "./JavaScript" {
   export namespace JavaScript {
     export import ArrayUtils = AU;
@@ -29,13 +29,13 @@ declare module "./JavaScript" {
 
 export interface JavaScript extends JavaScript.JavaScript {}
 export class JavaScript implements JavaScript.JavaScript {}
-JavaScript.ArrayUtils = AU;
+// JavaScript.ArrayUtils = AU;
 JavaScript.ObjectUtils = OU;
-JavaScript.MapUtils = MU;
-JavaScript.ClassUtils = CU;
-JavaScript.JSONUtils = JU;
-JavaScript.Promise_utils = PU;
-JavaScript.String_utils = SU;
+// JavaScript.MapUtils = MU;
+// JavaScript.ClassUtils = CU;
+// JavaScript.JSONUtils = JU;
+// JavaScript.Promise_utils = PU;
+// JavaScript.String_utils = SU;
 
 export namespace JavaScript {
   export interface JavaScript {}

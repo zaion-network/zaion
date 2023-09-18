@@ -1,4 +1,3 @@
-import { Context } from "../Context";
 declare module "./GenericContext" {
   export namespace GenericContext {
     export interface GenericContext<V> {

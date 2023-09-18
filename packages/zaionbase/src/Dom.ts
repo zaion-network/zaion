@@ -23,6 +23,7 @@ export const setAttribute =
   (attribute: keyof Omit<HTMLElement["style"], "length" | "parentRule">) =>
   (value: woo) =>
   (e: HTMLElement) => {
+    // @ts-expect-error
     e.style[attribute] = value;
     return e;
   };
@@ -59,7 +60,7 @@ export const build = (node: UINode) => {
     if (current) {
       const children = current.children;
       if (children)
-        children.forEach((c) => {
+        children.forEach(c => {
           current.value.appendChild(c.value);
           stack.push(c);
         });

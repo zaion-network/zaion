@@ -1,12 +1,11 @@
 import { Stats, statSync as s } from "fs";
-import { HighUtilities } from "../../../HighUtilities";
 
 export class StatsSync {}
 export namespace StatsSync {
   interface getModifTime {
     (stats: Stats): Date;
   }
-  export const getModifTime: getModifTime = (stats) => stats.mtime;
+  export const getModifTime: getModifTime = stats => stats.mtime;
 
   export const statSync = s;
 
