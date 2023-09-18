@@ -1,0 +1,1 @@
+export { IndexRule } from "./IndexRule";

@@ -1,0 +1,28 @@
+name: type
+child:
+  name: kind
+  child:
+    name: sort
+    child:
+      name: sub-sort
+      child:
+        name: category
+        child:
+          name: sub-category
+          child:
+            name: genre
+            child:
+              name: sub-genre
+              child:
+                name: gene
+                child:
+                  name: sub-gene
+                  child:
+                    name: dna
+                    child:
+                      name: sub-dna
+possible_words:
+  - genotype
+  - dna
+  - dinasty # lol
+  - style
