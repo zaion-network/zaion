@@ -1,0 +1,152 @@
+body {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  margin: 0px;
+  background: #000;
+}
+
+img {
+  position: relative;
+  color: white;
+  width: 150px;
+}
+
+.svgWrap__svg {
+  position: relative;
+  color: white;
+  width: 150px;
+}
+.logo-glitch::after {
+  position: absolute;
+  content: "";
+  -webkit-mask: url("Logo_white.svg") no-repeat 50% 50%;
+  mask: url("Logo_white.svg");
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  height: 300px;
+  width: 300px;
+  background-color: white;
+}
+#l1 {
+  filter: drop-shadow(-1px 0 red);
+}
+#l2 {
+  filter: drop-shadow(1px 0 green);
+}
+#l3 {
+  filter: drop-shadow(1px 0 blue);
+}
+#l1::after {
+  position: absolute;
+  background-color: white;
+  top: 0px;
+  left: -1px;
+  clip: rect(99px 251px 132px 0);
+  animation: noise-anim2 1s infinite linear alternate-reverse;
+}
+#l2::after {
+  position: absolute;
+  background-color: white;
+  top: -1px;
+  left: 2px;
+  clip: rect(2px, 450px, 346px, 0);
+  animation: noise-anim 2.4s infinite linear alternate-reverse;
+}
+#l3::after {
+  position: absolute;
+  background-color: white;
+  top: -5px;
+  left: -1px;
+  clip: rect(2px, 450px, 436px, 0);
+  animation: noise-anim 1.4s infinite linear alternate-reverse;
+}
+#l4::after {
+  position: absolute;
+  background-color: white;
+  top: 0;
+  left: 0;
+}
+@keyframes noise-anim {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+  }
+  40% {
+    clip-path: inset(43% 0 1% 0);
+  }
+  60% {
+    clip-path: inset(25% 0 58% 0);
+  }
+  80% {
+    clip-path: inset(54% 0 7% 0);
+  }
+  100% {
+    clip-path: inset(58% 0 43% 0);
+  }
+}
+@keyframes noise-anim2 {
+  0% {
+    clip: rect(9px, 251px, 39px, 0);
+  }
+  25% {
+    clip: rect(149px, 251px, 179px, 0);
+  }
+  50% {
+    clip: rect(99px, 251px, 132px, 0);
+  }
+  100% {
+    clip: rect(59px, 251px, 109px, 0);
+  }
+}
+/* .svgWrap__svg::before {
+  position: absolute;
+  display: inline-flex;
+  content: "";
+  background-image: url("Logo_white.svg");
+  background-size: 150px 150px;
+  height: 150px;
+  width: 150px;
+  top: 10px;
+}
+.svgWrap__svg::after {
+  position: absolute;
+  content: "";
+  display: inline-flex;
+  -webkit-mask: url("Logo_white.svg") no-repeat 50% 50%;
+  mask: url("Logo_white.svg") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: red;
+  height: 150px;
+  width: 150px;
+  top: -10px;
+  left: 0;
+} */
+
+/* .svgWrap__svg::before,
+.svgWrap__svg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 300px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+.svgWrap__svg::before {
+  left: -6px;
+  background-image: url("/assets/Logo_white.svg");
+  animation: noise-anim 2s infinite linear alternate-reverse;
+}
+.svgWrap__svg::after {
+  left: 6px;
+  background-image: url("/assets/Logo_white.svg");
+  animation: noise-anim-2 3s infinite linear alternate-reverse;
+} */
