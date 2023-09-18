@@ -11,34 +11,38 @@ const PathBuilder =
 export namespace ExchangeApi {
   export const httpRequest = TopUtilities.Node.Https.httpRequest;
 
-  export interface _object {
-    [k: string]: string | number | undefined;
-  }
-
-  export interface commonOptions extends _object {
+  export interface getTickerPriceProps extends _object {
     symbol: string;
     timestamp?: number;
     signature?: string;
   }
 
-  export interface getTickerPriceProps extends commonOptions {}
+  export interface getOrdersProps extends _object {
+    symbol: string;
+    timestamp?: number;
+    signature?: string;
+  }
 
-  export interface getOrdersProps extends commonOptions {}
-
-  export interface getOrdersDetailsProps extends commonOptions {}
+  export interface getOrdersDetailsProps extends _object {
+    symbol: string;
+    timestamp?: number;
+    signature?: string;
+  }
 
   export interface getTickerCandlesArgs extends _object {
     symbol: string;
     interval: string;
-    limit?: number;
-    startTime?: number;
-    endTime?: number;
+    limit: number;
   }
 
   export interface getterProps<H = undefined> {
     path: string;
     headers?: H;
     body?: string;
+  }
+
+  export interface _object {
+    [k: string]: string | number | undefined;
   }
 
   export interface createOrderProps extends _object {

@@ -1,6 +1,0 @@
-Con il modulo Server l'obiettivo è di creare un server che si connetta al websocket di binance e al quale ci si puo connettere tramite socket.
-Il modulo consiste in un server che registra un database locale di dati provenienti dagli exchange, ed ascolta nuovi eventi provenienti dallo stesso:
-
-- candele
-- orderbook
-  Il server si occupa di creare degli stream di informazioni che vengono poi mandati a degli agenti che sono degli operatori software che hanno accesso alla piattaforma di exchange.
