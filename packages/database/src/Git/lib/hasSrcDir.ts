@@ -1,6 +1,6 @@
-import { ZionError } from "@zionstate/zionbase/utils";
+// import { ZionError } from "@zionstate/zionbase/utils";
 import { system } from "../../../src/FileSystem";
-ZionError;
+// ZionError;
 import { Repo_v1 as Repo } from "../Repo/Repo_v1";
 Repo;
 // const { system } = FS;
@@ -48,4 +48,4 @@ existsSync;
 //   hasDir = existsSync(computedpath);
 //   return hasDir;
 // }
-export {};
+export { };
