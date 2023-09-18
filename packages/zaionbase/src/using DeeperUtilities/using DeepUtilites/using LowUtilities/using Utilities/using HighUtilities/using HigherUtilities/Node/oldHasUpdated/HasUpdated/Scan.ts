@@ -1,8 +1,12 @@
-import { HigherUtilities as Utilities } from "../../../../HigherUtilites";
+import { Conditioner } from "../../../../../../../../Conditioner";
+import { MethodWithStrategies } from "../../../../../../MethodWithStrategy";
+import { ExecSync as ES } from "../../../../Node/ChildProcess/ExecSync";
+import { ReaddirSync as RDS } from "../../../../Node/FileSystem/ReaddirSync";
+import { MapCallbacks } from "../../../../JavaScript/ArrayUtils";
 
 export class Scan<
   S extends keyof typeof Scan.scanStrategies
-> extends Utilities.MethodWithStrategies<
+> extends MethodWithStrategies<
   typeof Scan.scanStrategies,
   { sh: Scan.find; readDir: Scan.readDirIn },
   S
@@ -44,15 +48,11 @@ export namespace Scan {
     sh = "sh",
     readDir = "readDir",
   }
-  export const ExecSync = Utilities.Node.ChildProcess.ExecSync;
-  export const ReaddirSync = Utilities.Node.FileSystem.ReaddirSync;
+  export const ExecSync = ES;
+  export const ReaddirSync = RDS;
 
   export interface readDirIn {
-    (
-      dirPath: string,
-      arrayOfFiles?: string[],
-      options?: Utilities.Node.FileSystem.ReaddirSync.Options
-    ): string[];
+    (dirPath: string, arrayOfFiles?: string[], options?: RDS.Options): string[];
   }
   export const readDir: readDirIn = (dirPath, arrayOfFiles = [], options) => {
     return new Scan.ReaddirSync(dirPath, arrayOfFiles, options)
@@ -76,13 +76,13 @@ export namespace Scan {
     return result;
   };
 
-  const replace = Utilities.JavaScript.ArrayUtils.MapCallbacks.replacer;
-  const makeValidations = Utilities.Conditioner.makeValidations;
+  const replace = MapCallbacks.replacer;
+  const makeValidations = Conditioner.makeValidations;
   export const checkOptions = (
     _options: { withoutSlash?: boolean | undefined },
     execSyncResult: string[]
   ) => {
-    const conditioner = new Utilities.Conditioner();
+    const conditioner = new Conditioner();
     const condition =
       _options.withoutSlash === undefined ? false : _options.withoutSlash;
     const ifTrue = () => execSyncResult.map(replace("./", ""));

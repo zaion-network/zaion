@@ -1,8 +1,9 @@
-import { HigherUtilities as Utilities } from "../../../../HigherUtilites";
+import { MethodWithStrategies } from "../../../../../../MethodWithStrategy";
+import { Crypto } from "../../../../Node/Crypto";
 
 export class Hash<
   S extends keyof typeof Hash.hashStrategies = keyof typeof Hash.hashStrategies
-> extends Utilities.MethodWithStrategies<
+> extends MethodWithStrategies<
   typeof Hash.hashStrategies,
   { default: Hash.hash },
   S
@@ -18,7 +19,7 @@ export namespace Hash {
   export interface hashIt {
     (string: string): string;
   }
-  export const hashIt: hashIt = Utilities.Node.Crypto.hashIt;
+  export const hashIt: hashIt = Crypto.hashIt;
 
   export interface hash {
     (scanResult: string[], db: any, path: string): 1 | 0;

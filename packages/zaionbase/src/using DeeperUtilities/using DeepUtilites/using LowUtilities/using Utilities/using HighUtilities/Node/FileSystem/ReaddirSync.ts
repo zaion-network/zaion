@@ -1,11 +1,58 @@
 import { Stats, readdirSync as r, statSync, Dirent } from "fs";
 import { join } from "path";
-import { HighUtilities } from "../../../HighUtilities";
+import * as HighUtilities from "../../../../../../../";
 
-interface State<M extends boolean> {
-  context: ReaddirSync<any>;
-  withLastModifTime?: M;
+declare module "./ReaddirSync" {
+  namespace ReaddirSync {
+    interface State<M extends boolean> {
+      context: ReaddirSync<any>;
+      withLastModifTime?: M;
+    }
+    interface ReaddirSync<T extends string[]> {
+      dirPath: string;
+      arrayOfFiles: string[];
+      digest(): T;
+    }
+
+    interface isDirectory {
+      (file?: string, dirPath?: string): boolean;
+    }
+
+    interface discriminateRecurse {
+      (dirPath?: string, arrayOfFiles?: string[]): (file: string) => void;
+    }
+
+    interface discriminateRecurseDirent {
+      (dirPath?: Dirent, arrayOfFiles?: Dirent[]): (file: Dirent) => void;
+    }
+
+    interface recurse {
+      (arrayOfFiles: string[], path: string, dirPath: string): void;
+    }
+
+    interface forEachString {
+      (
+        dirPath?: string,
+        arrayOfFiles?: string[],
+        cb?: (dirPath: string, arrayOfFiles: string[]) => (file: string) => void
+      ): void;
+    }
+
+    interface forEachDirent {
+      (
+        dirPath?: Dirent,
+        arrayOfFiles?: Dirent[],
+        cb?: (dirPath: Dirent, arrayOfFiles: Dirent[]) => (file: Dirent) => void
+      ): void;
+    }
+
+    interface Options {
+      withLastModifTime?: boolean;
+    }
+  }
 }
+
+interface State<M extends boolean> extends ReaddirSync.State<M> {}
 class State<M extends boolean> {
   constructor(public state: M, public context: ReaddirSync<any>) {
     context.withLastModifTime = this.withLastModifTime ? true : false;
@@ -25,7 +72,7 @@ export interface ReaddirSync<T extends string[]>
 }
 
 export class ReaddirSync<T extends string[]>
-  extends HighUtilities.BasicClass
+  extends HighUtilities.BasicClass.BasicClass
   implements ReaddirSync.ReaddirSync<T>
 {
   constructor(
@@ -81,8 +128,8 @@ export class ReaddirSync<T extends string[]>
     return (file: string) => {
       this.#file = file;
       this.dirPath = path;
-      const maaa = ReaddirSync.makeActionAndArgs;
-      const mv = ReaddirSync.makeValidations;
+      const maaa = HighUtilities.Conditioner.makeActionAndArgs;
+      const mv = HighUtilities.Conditioner.makeValidations;
       const boolean = this.conditioner.boolean;
       const iftrue = maaa(() => this.#jointAndLastModif(), []);
       const iffalse = maaa(() => this.#dirAndFilename(), []);
@@ -101,8 +148,8 @@ export class ReaddirSync<T extends string[]>
     return (file: Dirent) => {
       this.#file = file.name;
       this.dirPath = path;
-      const maaa = ReaddirSync.makeActionAndArgs;
-      const mv = ReaddirSync.makeValidations;
+      const maaa = HighUtilities.Conditioner.makeActionAndArgs;
+      const mv = HighUtilities.Conditioner.makeValidations;
       const boolean = this.conditioner.boolean;
       const iftrue = maaa(() => this.#jointAndLastModif(), []);
       const iffalse = maaa(() => this.#dirAndFilename(), []);
@@ -156,53 +203,12 @@ export class ReaddirSync<T extends string[]>
   };
 }
 export namespace ReaddirSync {
-  export interface ReaddirSync<T extends string[]> {
-    dirPath: string;
-    arrayOfFiles: string[];
-    digest(): T;
-  }
   enum config {
     withLastModifTime = "withLastModifTime",
   }
   enum states {}
   export enum readdirSyncErrors {
     runfirst = "call the run method first",
-  }
-
-  export interface isDirectory {
-    (file?: string, dirPath?: string): boolean;
-  }
-
-  export interface discriminateRecurse {
-    (dirPath?: string, arrayOfFiles?: string[]): (file: string) => void;
-  }
-
-  export interface discriminateRecurseDirent {
-    (dirPath?: Dirent, arrayOfFiles?: Dirent[]): (file: Dirent) => void;
-  }
-
-  export interface recurse {
-    (arrayOfFiles: string[], path: string, dirPath: string): void;
-  }
-
-  export interface forEachString {
-    (
-      dirPath?: string,
-      arrayOfFiles?: string[],
-      cb?: (dirPath: string, arrayOfFiles: string[]) => (file: string) => void
-    ): void;
-  }
-
-  export interface forEachDirent {
-    (
-      dirPath?: Dirent,
-      arrayOfFiles?: Dirent[],
-      cb?: (dirPath: Dirent, arrayOfFiles: Dirent[]) => (file: Dirent) => void
-    ): void;
-  }
-
-  export interface Options {
-    withLastModifTime?: boolean;
   }
 
   export const isDirectory: ReaddirSync.isDirectory = (

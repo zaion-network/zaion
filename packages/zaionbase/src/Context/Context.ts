@@ -1,5 +1,4 @@
-import { DeeperUtilities } from "../DeeperUtilities";
-
+import { Mixins } from "../Mixins";
 declare module "./Context" {
   namespace Context {
     interface Context<V> {
@@ -13,7 +12,7 @@ declare module "./Context" {
       interface ValueChange<V> {
         changeValue(state: StateCtx<V>): ValueChange<V>;
       }
-      type ValueChangeable<V> = DeeperUtilities.Mixins.mixin<
+      type ValueChangeable<V> = Mixins.mixin<
         ValueChange<V>,
         Context<V>,
         new (...args: any[]) => Context<V>
@@ -22,7 +21,7 @@ declare module "./Context" {
       interface StateCtx<V> extends Context.State<V> {
         ctx: Context<V> & ValueChange<V>;
       }
-      type StateCtxable<V> = DeeperUtilities.Mixins.mixin<
+      type StateCtxable<V> = Mixins.mixin<
         StateCtx<V>,
         State<V>,
         new (...args: any[]) => State<V>
@@ -52,9 +51,9 @@ export namespace Context {
   }
 
   export namespace ValueChangeable {
-    export const ValueChangeable: ValueChange.ValueChangeable<number> = (
-      ctor
-    ) => {
+    export const ValueChangeable: ValueChange.ValueChangeable<
+      number
+    > = ctor => {
       return class Extended extends ctor {
         changeValue(state: State<number>) {
           this.value = state.value;
@@ -62,7 +61,7 @@ export namespace Context {
         }
       };
     };
-    export const StateCtxable: ValueChange.StateCtxable<number> = (ctor) =>
+    export const StateCtxable: ValueChange.StateCtxable<number> = ctor =>
       class extends ctor {
         ctx: Context<number> & ValueChange.ValueChange<number>;
         constructor(ctx: Context<number> & ValueChange.ValueChange<number>) {

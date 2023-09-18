@@ -45,12 +45,12 @@ export namespace Update {
     (path: string): ChangeLog;
   }
 
-  export const getLastModifiedTime: getLastModifiedTime = (path) => {
+  export const getLastModifiedTime: getLastModifiedTime = path => {
     return new GetLastModifiedTime().getLastModifiedTime(path);
   };
 
   export class GetLastModifiedTime {
-    getLastModifiedTime: Update.getLastModifiedTime = (path) => {
+    getLastModifiedTime: Update.getLastModifiedTime = path => {
       let editDate = null;
       let editedPath: editedPath = null;
       console.log(path);
@@ -67,6 +67,7 @@ export namespace Update {
         };
         let res: [editedDate, editedPath] | undefined =
           GetLastModifiedTime.getLastModifiedTimeFile(obj);
+        // @ts-expect-error
         if (res) [editDate, editedPath] = res;
         else continue;
       }

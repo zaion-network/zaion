@@ -1,8 +1,15 @@
-import { HigherUtilities } from "../HigherUtilites";
+import { Conditioner } from "../../../../../Conditioner";
+import { MethodWithStrategies } from "../../../MethodWithStrategy";
+import { StatsSync } from "../Node/FileSystem/StatsSync";
+import { Crypto } from "../Node/Crypto";
+import { ExecSync as ES } from "../Node/ChildProcess/ExecSync";
+import { ReaddirSync as RDS } from "../Node/FileSystem/ReaddirSync";
+import { Path } from "../Node/Path";
+import { MapCallbacks } from "../JavaScript/ArrayUtils";
 
 export class HasUpdated<
   S extends keyof typeof HasUpdated.hasUpdatedStrategies
-> extends HigherUtilities.MethodWithStrategies<
+> extends MethodWithStrategies<
   typeof HasUpdated.hasUpdatedStrategies,
   {
     hash: HasUpdated.Hash<"default">["execute"];
@@ -37,7 +44,7 @@ export namespace HasUpdated {
   }
   export class Hash<
     S extends keyof typeof Hash.hashStrategies = keyof typeof Hash.hashStrategies
-  > extends HigherUtilities.MethodWithStrategies<
+  > extends MethodWithStrategies<
     typeof Hash.hashStrategies,
     { default: Hash.hash },
     S
@@ -53,7 +60,7 @@ export namespace HasUpdated {
     export interface hashIt {
       (string: string): string;
     }
-    export const hashIt: hashIt = HigherUtilities.Node.Crypto.hashIt;
+    export const hashIt: hashIt = Crypto.hashIt;
 
     export interface hash {
       (scanResult: string[], db: any, path: string): 1 | 0;
@@ -75,7 +82,7 @@ export namespace HasUpdated {
 
   export class Scan<
     S extends keyof typeof Scan.scanStrategies
-  > extends HigherUtilities.MethodWithStrategies<
+  > extends MethodWithStrategies<
     typeof Scan.scanStrategies,
     { sh: Scan.find; readDir: Scan.readDirIn },
     S
@@ -117,14 +124,14 @@ export namespace HasUpdated {
       sh = "sh",
       readDir = "readDir",
     }
-    export const ExecSync = HigherUtilities.Node.ChildProcess.ExecSync;
-    export const ReaddirSync = HigherUtilities.Node.FileSystem.ReaddirSync;
+    export const ReaddirSync = RDS;
+    export const ExecSync = ES;
 
     export interface readDirIn {
       (
         dirPath: string,
         arrayOfFiles?: string[],
-        options?: HigherUtilities.Node.FileSystem.ReaddirSync.Options
+        options?: RDS.Options
       ): string[];
     }
     export const readDir: readDirIn = (dirPath, arrayOfFiles = [], options) => {
@@ -149,13 +156,13 @@ export namespace HasUpdated {
       return result;
     };
 
-    const replace = HigherUtilities.JavaScript.ArrayUtils.MapCallbacks.replacer;
-    const makeValidations = HigherUtilities.Conditioner.makeValidations;
+    const replace = MapCallbacks.replacer;
+    const makeValidations = Conditioner.makeValidations;
     export const checkOptions = (
       _options: { withoutSlash?: boolean | undefined },
       execSyncResult: string[]
     ) => {
-      const conditioner = new HigherUtilities.Conditioner();
+      const conditioner = new Conditioner();
       const condition =
         _options.withoutSlash === undefined ? false : _options.withoutSlash;
       const ifTrue = () => execSyncResult.map(replace("./", ""));
@@ -169,7 +176,7 @@ export namespace HasUpdated {
 
   export class Update<
     S extends keyof typeof Update.updateStrategies
-  > extends HigherUtilities.MethodWithStrategies<
+  > extends MethodWithStrategies<
     typeof Update.updateStrategies,
     { default: Update.getLastModifiedTime },
     S
@@ -184,8 +191,8 @@ export namespace HasUpdated {
   }
 
   export namespace Update {
-    type editedDate = HigherUtilities.Node.FileSystem.StatsSync.editedDate;
-    type editedPath = HigherUtilities.Node.FileSystem.StatsSync.editedPath;
+    type editedDate = StatsSync.editedDate;
+    type editedPath = StatsSync.editedPath;
     export enum updateStrategies {
       default = "default",
     }
@@ -208,17 +215,16 @@ export namespace HasUpdated {
       };
     }
 
-    export const getLastModifiedTime: getLastModifiedTime = (path) => {
+    export const getLastModifiedTime: getLastModifiedTime = path => {
       return new GetLastModifiedTime().getLastModifiedTime(path);
     };
 
     export class GetLastModifiedTime {
-      getLastModifiedTime: Update.getLastModifiedTime = (path) => {
+      getLastModifiedTime: Update.getLastModifiedTime = path => {
         let editDate = null;
         let editedPath: editedPath = null;
         console.log(path);
-        const readdirSync =
-          HigherUtilities.Node.FileSystem.ReaddirSync.readdirSync;
+        const readdirSync = RDS.readdirSync;
 
         const files = readdirSync(path);
         for (const file of files) {
@@ -236,15 +242,14 @@ export namespace HasUpdated {
         return {
           editDate,
           editedPath,
-          filename: HigherUtilities.Node.Path.ifUndefined(editedPath),
+          filename: Path.ifUndefined(editedPath),
         };
       };
     }
 
     export namespace GetLastModifiedTime {
       interface glmgeneric<T = unknown, R = unknown>
-        extends HigherUtilities.Node.FileSystem.StatsSync
-          .genericGetLastModiftime<T, R> {}
+        extends StatsSync.genericGetLastModiftime<T, R> {}
 
       interface getLastModifiedTimeInFolder
         extends glmgeneric<{ filePath: string }> {}
@@ -263,8 +268,7 @@ export namespace HasUpdated {
         }
         return [editDate, editedPath];
       };
-      export const getLastModifiedTimeOfFile =
-        HigherUtilities.Node.FileSystem.StatsSync.getLastModifiedTimeOfFile;
+      const getLastModifiedTimeOfFile = StatsSync.getLastModifiedTimeOfFile;
 
       interface getLastModifiedTimeFile
         extends glmgeneric<{ file: string; path: string }, undefined> {}
@@ -278,8 +282,7 @@ export namespace HasUpdated {
           return; // salta il file .DS_Store
         }
         const filePath = `${path}/${file}`;
-        const stats =
-          HigherUtilities.Node.FileSystem.StatsSync.statSync(filePath);
+        const stats = StatsSync.statSync(filePath);
         const folderobj = {
           filePath,
           editDate,
@@ -301,7 +304,7 @@ export namespace HasUpdated {
   // let oo = new Update("default").execute("");
   export class Length<
     S extends keyof typeof Length.lengthStrategies
-  > extends HigherUtilities.MethodWithStrategies<
+  > extends MethodWithStrategies<
     typeof Length.lengthStrategies,
     { default: Length.lengthStrat },
     S
@@ -323,11 +326,11 @@ export namespace HasUpdated {
     export interface lengthStrat {
       (db: { [k: string]: { hash: { nFiles: number } } }, path: string): 1 | 0;
     }
-    const conditioner = new HigherUtilities.Conditioner();
+    const conditioner = new Conditioner();
     const boolean = conditioner.boolean;
-    const makeValidations = HigherUtilities.Conditioner.makeValidations;
+    const makeValidations = Conditioner.makeValidations;
     export const lengthStrat: lengthStrat = (db, path) => {
-      const condition = Length.scan(path).length === db[path].hash.nFiles;
+      const condition = Length.scan(path).length === db[path]!.hash.nFiles;
       const ifTrue = () => 1;
       const ifFalse = () => 0;
       return boolean([condition, makeValidations([ifTrue, []], [ifFalse, []])]);

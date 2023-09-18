@@ -1,9 +1,10 @@
-import { HigherUtilities as DeepUtilities } from "../../../../HigherUtilites";
+import { MethodWithStrategies } from "../../../../../../MethodWithStrategy";
+import { Conditioner } from "../../../../../../../../Conditioner";
 import { Scan } from "./Scan";
 
 export class Length<
   S extends keyof typeof Length.lengthStrategies
-> extends DeepUtilities.MethodWithStrategies<
+> extends MethodWithStrategies<
   typeof Length.lengthStrategies,
   { default: Length.lengthStrat },
   S
@@ -25,9 +26,9 @@ export namespace Length {
   export interface lengthStrat {
     (db: { [k: string]: { hash: { nFiles: number } } }, path: string): 1 | 0;
   }
-  const conditioner = new DeepUtilities.Conditioner();
+  const conditioner = new Conditioner();
   const boolean = conditioner.boolean;
-  const makeValidations = DeepUtilities.Conditioner.makeValidations;
+  const makeValidations = Conditioner.makeValidations;
   export const lengthStrat: lengthStrat = (db, path) => {
     const condition = Length.scan(path).length === db[path].hash.nFiles;
     const ifTrue = () => 1;

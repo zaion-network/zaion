@@ -1,14 +1,20 @@
-import { HigherUtilities } from "../HigherUtilites";
+import type {
+  details,
+  detailsEditor,
+  completeDetails,
+  splitter,
+  splicer,
+  substituter,
+  detailer,
+  FilterCallbacks,
+  MapCallbacks,
+} from "../JavaScript/ArrayUtils";
 
 declare module "./FileEditor" {
-  type details = HigherUtilities.JavaScript.ArrayUtils.details;
-  type compDet = HigherUtilities.JavaScript.ArrayUtils.completeDetails;
-  type splitter = HigherUtilities.JavaScript.ArrayUtils.splitter;
-  type detailer = HigherUtilities.JavaScript.ArrayUtils.detailer;
-  type dtsMkr =
-    HigherUtilities.JavaScript.ArrayUtils.FilterCallbacks.completeDetailsMaker;
-  type detEditor = HigherUtilities.JavaScript.ArrayUtils.detailsEditor;
-  type subs = HigherUtilities.JavaScript.ArrayUtils.substituter;
+  type compDet = completeDetails;
+  type dtsMkr = FilterCallbacks.completeDetailsMaker;
+  type detEditor = detailsEditor;
+  type subs = substituter;
 
   type reader = (path: string) => Buffer;
   type start = undefined | string;
@@ -16,13 +22,9 @@ declare module "./FileEditor" {
   type arrOrDet = string[] | details;
   type detOrCom = compDet | details;
   type detOrStr = compDet | string;
-  type mapCallback<
-    E,
-    R = E
-  > = HigherUtilities.JavaScript.ArrayUtils.MapCallbacks.mapCallback<E, R>;
+  type mapCallback<E, R = E> = MapCallbacks.mapCallback<E, R>;
 
   type read = (filename: string, reader: (path: string) => Buffer) => string[];
-  type splicer = HigherUtilities.JavaScript.ArrayUtils.splicer;
   interface fileSaver {
     (path: string, content: string): void;
   }

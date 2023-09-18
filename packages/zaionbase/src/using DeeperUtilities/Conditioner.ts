@@ -1,4 +1,5 @@
-import { DeeperUtilities } from "../DeeperUtilities";
+import { errorCb } from "../ErrorHandler";
+import { FunctionTypes } from "../FunctionTypes";
 
 export interface Conditioner {
   boolean: Conditioner.Boolean;
@@ -35,23 +36,23 @@ export class Conditioner {
     return this.boolean([props[0], makeValidations(doNothing, ifFalse)]);
   };
   safeGuardError: Conditioner.Safeguard = props => {
-    const existAnalysys = DeeperUtilities.ErrorHandler.errorCb(props[1]);
+    const existAnalysys = errorCb(props[1]);
     return this.booleanFalse(!props[0], [existAnalysys, []]);
   };
-  elseIf: Conditioner.ElseIf = (value, arr, defaultCondition) => {
+  elseIf: Conditioner.ElseIf = (_, arr, defaultCondition) => {
     return Conditioner.reduceConditions(arr, defaultCondition);
   };
 }
 export namespace Conditioner {
   /// imports
-  type AnyVoidFunction = DeeperUtilities.AnyVoidFunction;
+  export type AnyVoidFunction = FunctionTypes.AnyVoidFunction;
   export type GenericFunction<
     A extends any[],
     R
-  > = DeeperUtilities.GenericFunction<A, R>;
-  type inferGenericFunction<F> = DeeperUtilities.inferGenericFunction<F>;
+  > = FunctionTypes.GenericFunction<A, R>;
+  type inferGenericFunction<F> = FunctionTypes.inferGenericFunction<F>;
   ///////
-  export type action = DeeperUtilities.AnyFunction;
+  export type action = FunctionTypes.AnyFunction;
   export type args = any[];
   export type actionAndArgs = [action, args];
   type errormessage = string;
@@ -117,7 +118,7 @@ export namespace Conditioner {
   }
   export const createErrorMap: createErrorMap = message => {
     const map = new Map();
-    map.set(false, DeeperUtilities.ErrorHandler.errorCb(message));
+    map.set(false, errorCb(message));
     map.set(true, () => {});
     return map;
   };
@@ -230,9 +231,10 @@ export namespace Conditioner {
       .reverse()
       .reduce(reducer, [true, defaultAction, undefined]);
     let map = reduced[2];
-    let cb = map?.get(arr[0][0]);
+    let cb = map?.get(arr[0]![0]);
     return cb[0](...cb[1]);
   };
+
   export namespace Zionbase {
     type StandardValues = string | number | boolean;
 

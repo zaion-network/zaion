@@ -1,4 +1,4 @@
-import { DeepUtilities } from "../DeepUtilities";
+import { Conditioner as C } from "../Conditioner";
 
 export namespace TipiDiCondizioni {
   const donothing = () => {
@@ -159,15 +159,12 @@ export namespace TipiDiCondizioni {
         const condition1 = false;
         const condition2 = false;
         const condition3 = false;
-        let arr: DeepUtilities.Conditioner.condition[] = [
+        let arr: C.condition[] = [
           [condition1, logAndReturn("condition1"), []],
           [condition2, logAndReturn("condition2"), []],
           [condition3, logAndReturn("condition3"), []],
         ];
-        let oo = DeepUtilities.Conditioner.reduceConditions(arr, [
-          defaultFoo,
-          [],
-        ]);
+        let oo = C.reduceConditions(arr, [defaultFoo, []]);
         // oo[2]?.get(condition1)();
       },
       children: {
@@ -192,19 +189,16 @@ export namespace TipiDiCondizioni {
             const condition1 = string === "ciao";
             const condition2 = string === "cacca";
 
-            let arr: DeepUtilities.Conditioner.condition[] = [
+            let arr: C.condition[] = [
               [condition1, logAndReturn("got ciao"), []],
               [condition2, logAndReturn("got cacca"), []],
             ];
-            let oo = DeepUtilities.Conditioner.reduceConditions(arr, [
-              defaultFoo,
-              [],
-            ]);
+            let oo = C.reduceConditions(arr, [defaultFoo, []]);
           },
           fromConditioner: (string: string) => {
             const condition1 = string === "ciao";
             const condition2 = string === "miao";
-            return new DeepUtilities.Conditioner().elseIf(
+            return new C().elseIf(
               string,
               [
                 [condition1, () => console.log("ciao"), []],

@@ -1,4 +1,5 @@
-import { DeepUtilities } from "../DeepUtilities";
+import { FunctionTypes } from "../../FunctionTypes";
+import { Conditioner as C } from "../Conditioner";
 
 export interface Action<A extends Array<any>, R> {
   isSync(): this is Action.SyncAction<A, R>;
@@ -16,9 +17,9 @@ export class Action<A extends Array<any>, R> implements Action.Action<A, R> {
   ) {}
 }
 export namespace Action {
-  export const Conditioner = DeepUtilities.Conditioner;
-  export type action = DeepUtilities.Conditioner.action;
-  export type actionAndArgs = DeepUtilities.Conditioner.actionAndArgs;
+  export const Conditioner = C;
+  export type action = C.action;
+  export type actionAndArgs = C.actionAndArgs;
   export interface Action<A extends Array<any>, R> {
     type: keyof typeof types;
     args: A;
@@ -35,7 +36,7 @@ export namespace Action {
     async = "async",
   }
 
-  export type genericAction<A extends any[], R> = DeepUtilities.GenericFunction<
+  export type genericAction<A extends any[], R> = FunctionTypes.GenericFunction<
     A,
     R
   >;
