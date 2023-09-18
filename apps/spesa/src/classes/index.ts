@@ -1,1 +1,3 @@
-export { Application, SpesaApplication } from "./Spesa_v1";
+export { Product } from "./Product";
+export { Application, SpesaApplication } from "./Spesa";
+export { Categoria } from "./Categoria"
