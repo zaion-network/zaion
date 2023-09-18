@@ -10,12 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zaionstate/ipc-server": "^0.0.0",
-    "@zaionstate/zaionbase": "^0.0.1",
+    "@zaionstate/ipc-server": "workspace:*",
+    "@zaionstate/zaionbase": "workspace:*",
     "fast-xml-parser": "4.2.7",
     "zlib": "1.0.5"
-  },
-  "devDependencies": {
-    "@types/node": "20.4.9"
   }
 }

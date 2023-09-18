@@ -5,13 +5,7 @@
   "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
   "license": "MIT",
   "dependencies": {
-    "@zaionstate/ipc-server": "^0.0.0",
-    "@zaionstate/zaionbase": "^0.0.1",
-    "dotenv": "16.3.1",
-    "ws": "8.13.0"
-  },
-  "devDependencies": {
-    "@types/node": "20.4.9",
-    "@types/ws": "8.5.5"
+    "@zaionstate/ipc-server": "workspace:*",
+    "@zaionstate/zaionbase": "workspace:*"
   }
 }

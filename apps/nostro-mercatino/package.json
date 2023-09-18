@@ -13,15 +13,8 @@
     "build": "script/build.js && yarn build:rollup"
   },
   "dependencies": {
-    "@zaionstate/nostr": "^0.0.0",
-    "@zaionstate/ui": "^0.0.0",
+    "@zaionstate/nostr": "workspace:*",
+    "@zaionstate/ui": "workspace:*",
     "webln": "0.3.2"
-  },
-  "devDependencies": {
-    "@babel/core": "7.22.17",
-    "@rollup/plugin-babel": "6.0.3",
-    "@rollup/plugin-commonjs": "25.0.4",
-    "@rollup/plugin-node-resolve": "15.2.1",
-    "rollup": "3.28.1"
   }
 }
