@@ -1,25 +1,35 @@
 {
   "compilerOptions": {
+    // Projects
+    "incremental": true,
+    // Language and Environment
+    "target": "ES2017",
+    "lib": ["DOM", "DOM.Iterable", "ES2019", "es2021"],
+    "jsx": "react-jsx",
+    // Modules
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "resolveJsonModule": true,
+    // Javascript Support
     "allowJs": false,
-    "allowSyntheticDefaultImports": true,
+    // Emit
+    "sourceMap": true,
+    "removeComments": false,
     "downlevelIteration": true,
+    "preserveConstEnums": true,
+    // Interoperability Costraints
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "noUncheckedIndexedAccess": true,
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ES2017"
+    "noUncheckedIndexedAccess": true,
+    // Completness
+    "skipLibCheck": true
+    //
   },
   "exclude": ["node_modules"]
 }
