@@ -8,7 +8,6 @@ COPY . .
 # Installa le dipendenze e esegui il comando yarn build per compilare i file
 RUN bun install
 RUN bun run build
-RUN bun run run
 
 # Seconda fase per creare l'immagine finale
 FROM alpine:latest
@@ -23,4 +22,4 @@ COPY --from=builder ./src /var/www/localhost/htdocs/
 EXPOSE 80
 
 # Avvia Lighttpd quando il contenitore viene eseguito
-CMD ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
+CMD ["bun", "run", "run"]
