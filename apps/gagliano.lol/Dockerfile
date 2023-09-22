@@ -6,7 +6,6 @@ WORKDIR /src
 COPY . .
 
 # Installa le dipendenze e esegui il comando yarn build per compilare i file
-RUN apk update
 RUN bun install
 RUN bun run build
 
