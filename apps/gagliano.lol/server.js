@@ -4,7 +4,7 @@ import { readdirSync } from "fs";
 
 // string
 const server = Bun.serve({
-  port: 3000,
+  port: 8081,
   async fetch(req) {
     const path = "./index.html";
     const file = Bun.file(path);
