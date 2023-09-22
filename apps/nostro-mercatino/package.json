@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
-    "build": "bun build ./src/index.js --outdir ./dist --target browser"
+    "build": "bun build ./src/index.js --outdir ./dist --target browser",
+    "oldbuild": "scripts/build.js && yarn build:rollup"
   },
   "dependencies": {
     "@zaionstate/nostr": "workspace:*",
