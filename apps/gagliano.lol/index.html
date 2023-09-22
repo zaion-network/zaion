@@ -1,76 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gagliano Home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <style>
-    body {
-      margin: 0;
-      border: none;
-      padding: 0;
-      font-family: "Lexend", sans-serif;
-      font-weight: 200;
-      background-color: hsl(170, 32%, 10%);
-      color: hsl(350, 3%, 98%);
-    }
-    h1,
-    h3,
-    p {
-      margin: 0;
-    }
-    h1 {
-      font-size: 7rem;
-    }
-    #container {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      place-content: center;
-      text-align: center;
-      > a {
-        text-decoration: none;
-        color: hsl(349, 11%, 89%);
-        width: max-content;
-        &:hover {
-          color: hsl(349, 100%, 50%);
-        }
-        place-self: center;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gagliano Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+</head>
+<style>
+  body {
+    margin: 0;
+    border: none;
+    padding: 0;
+    font-family: "Lexend", sans-serif;
+    font-weight: 200;
+    background-color: hsl(170, 32%, 10%);
+    color: hsl(350, 3%, 98%);
+  }
+
+  h1,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 7rem;
+  }
+
+  #container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    place-content: center;
+    text-align: center;
+
+    >a {
+      text-decoration: none;
+      color: hsl(349, 11%, 89%);
+      width: max-content;
+
+      &:hover {
+        color: hsl(349, 100%, 50%);
       }
+
+      place-self: center;
     }
-    #footer {
-      display: flex;
-      place-content: end;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      padding: 1rem;
-      box-sizing: border-box;
-      > a {
-        margin-right: 1rem;
-        text-decoration: none;
-      }
+  }
+
+  #footer {
+    display: flex;
+    place-content: end;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+
+    >a {
+      margin-right: 1rem;
+      text-decoration: none;
     }
-  </style>
-  <body>
-    <div id="container">
-      <h1>Gagliano Family =)</h1>
-      <h3>we are</h3>
-      <a href="./giacomo.html">Giacomo</a>
-      <a href="localhost:5500/apps/giacomo.gagliano.lol.html">Arianna</a>
-      <a href="localhost:5500/apps/giacomo.gagliano.lol.html">Noa Josephine</a>
-      <a href="localhost:5500/apps/giacomo.gagliano.lol.html">Mia Jacqueline</a>
-      <a href="localhost:5500/apps/giacomo.gagliano.lol.html">Era Jasmine</a>
-    </div>
-  </body>
-  <script type="module" src="./dist/index.js"></script>
+  }
+</style>
+
+<body>
+  <div id="content">
+  </div>
+</body>
+<script type="module" src="./dist/index.js"></script>
+
 </html>
