@@ -16,7 +16,7 @@ FROM alpine:latest
 RUN apk update && apk add lighttpd
 
 # Copia i file compilati nella directory del server
-COPY --from=builder ./src/dist /var/www/localhost/htdocs/
+COPY --from=builder ./src /var/www/localhost/htdocs/
 
 # Esponi la porta 80 per il server Lighttpd
 EXPOSE 80

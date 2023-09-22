@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
-    "build": "bun build ./src/index.js --outdir ./dist --target browser"
+    "build": "bun build ./src/index.js --outdir ./dist --target browser",
+    "docker": "docker build -t 'tnl.productions_wip' ."
   }
 }
