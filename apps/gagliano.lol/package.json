@@ -7,6 +7,21 @@
   "type": "module",
   "scripts": {
     "dev": "bun build ./src/index.js --outdir ./dist --target browser --watch",
-    "build": "bun build ./src/index.js --outdir ./dist --target browser"
+    "build": "bun build ./src/index.js --outdir ./dist --target browser",
+    "run": "bun --hot server.js"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "page": "^1.11.6",
+    "rehype-sanitize": "^6.0.0",
+    "rehype-stringify": "^10.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^10.1.0",
+    "unified": "^11.0.3",
+    "unist-util-visit": "^5.0.0"
   }
 }
