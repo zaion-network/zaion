@@ -2,9 +2,10 @@
 
 import { readdirSync } from "fs";
 
+console.log(process.env.DEV);
 // string
 const server = Bun.serve({
-  port: 80,
+  port: process.env.DEV,
   async fetch(req) {
     const path = "./index.html";
     const file = Bun.file(path);
@@ -43,12 +44,15 @@ const server = Bun.serve({
     } else {
       // subdomains
       const logcall = path => console.log(`got a call for ${path}`);
-      function handleGiacomo(url) {
+      async function handleGiacomo(url) {
         logcall(url.hostname);
+        const file = Bun.file("./src/giacomo.html");
+        const html = await file.text();
+        console.log(html);
         const headers = {
           "Content-Type": "text/html", // Imposta il tipo di contenuto a HTML
         };
-        return new Response(text, { headers });
+        return new Response(html, { headers });
       }
       function handleArianna(url) {
         logcall(url.hostname);
