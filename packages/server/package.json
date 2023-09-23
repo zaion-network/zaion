@@ -1,0 +1,22 @@
+{
+  "name": "@zaionstate/server",
+  "version": "0.0.0",
+  "module": "dist/index.js",
+  "source": "src/index.ts",
+  "types": "src/index.ts",
+  "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./build.ts"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.3",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "jsdom": "^22.1.0"
+  }
+}
