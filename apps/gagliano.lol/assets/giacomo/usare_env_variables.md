@@ -15,6 +15,20 @@ Ecco come puoi farlo in modo generale:
 
 Sostituisci NOME_VAR con il nome che desideri per la tua variabile d'ambiente e VALORE con il valore desiderato (ad esempio, la porta su cui deve essere eseguito il server).
 
+Impostando la variabile in questo modo la renderà accessibile fino al riavvio seguente.
+
+# Rendere persistente una variabile
+
+Per rendere le variabili persistenti segui questi passi:
+
+## Mac
+
+Aggiungengi la variabile ad uno script che viene lanciato all'apertura di una shell di terminale come ad esempio i file `.bashrc` o `.profile` (linux e mac).
+
+## Windows
+
+È possibile rendere persistente una variabile d'ambiente definendola attraverso le impostazioni avanzate del sistema.
+
 # Leggere la variabile d'ambiente nel tuo codice:
 
 La sintassi per leggere una variabile d'ambiente varia a seconda del linguaggio di programmazione che stai utilizzando. Ecco alcuni esempi per diversi linguaggi:
@@ -70,13 +84,15 @@ app.listen(porta, () => {
 
 In questo modo, puoi facilmente personalizzare la configurazione del tuo server senza dover modificare il codice sorgente ogni volta che desideri cambiare la porta su cui viene eseguito. Basta modificare il valore della variabile d'ambiente.
 
+# Variabile d'ambiente NODE_ENV:
+
 È possibile utilizzare una variabile d'ambiente per distinguere tra l'ambiente di sviluppo (dev) e l'ambiente di produzione (production) e quindi impostare automaticamente i valori delle variabili in base all'ambiente in cui viene eseguita l'applicazione. Di solito, questa variabile d'ambiente è chiamata qualcosa come "NODE_ENV" o "ENVIRONMENT".
 
 Ecco come puoi farlo:
 
-## Impostare la variabile d'ambiente NODE_ENV:
+## Definire la variabile
 
-In ambiente di sviluppo, puoi impostare la variabile d'ambiente così:
+In ambiente di sviluppo, puoi impostare la variabile d'ambiente così in una shell del terminale:
 
     export NODE_ENV=development
 
@@ -84,7 +100,7 @@ In ambiente di produzione, puoi impostarla in questo modo:
 
     export NODE_ENV=production
 
-# Leggere la variabile NODE_ENV nel tuo codice:
+## Leggere la variabile NODE_ENV nel tuo codice:
 
 Nel tuo codice, puoi leggere il valore della variabile NODE_ENV per determinare l'ambiente corrente e quindi configurare le altre variabili di conseguenza. Ecco un esempio in Node.js:
 
@@ -106,4 +122,19 @@ console.log(`Ambiente corrente: ${ambiente}`);
 console.log(`Porta del server: ${porta}`);
 ```
 
-Con questo approccio, puoi avere una configurazione diversa per l'ambiente di sviluppo e quello di produzione, senza dover modificare il codice sorgente quando cambi ambiente. Basta impostare la variabile NODE_ENV e le altre variabili verranno configurate automaticamente in base all'ambiente corrente.
+# Come utilizzare nel contensto di una ZAION.
+
+Abbiamo studiato questo lifecycle per il nostro ambiente di sviluppo:
+
+| fase | ambiente                   | NODE_ENV | decrizione                                   | prefissi                           | rete   | quando                                             |
+| ---- | -------------------------- | -------- | -------------------------------------------- | ---------------------------------- | ------ | -------------------------------------------------- |
+| IDEA | chat, group, discord       |          | fase di ideazione                            |                                    | locale |                                                    |
+|      | local machine, zion-server | WIP      | fase di sviluppo in ambiente locale          | wip.sito.com, wip.staging.sito.com | locale | nel dockerfile </br> `export NODE_ENV=wip`         |
+|      | host                       | DEV      | fase di testing del build in ambiente remoto | staging.sito.com                   | www    | nel dockerfile </br> `export NODE_ENV=development` |
+|      | host                       | MAIN     | produzione                                   | www.sito.com, sito.com             | www    | nel dockerfile </br> `export NODE_ENV=production`  |
+
+nel server metti una condizione di questo tipo:
+
+```js
+if(process.env.NODE_ENV === "")
+```
