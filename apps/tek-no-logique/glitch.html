@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Creare effetto GLITCH con CSS</title>
-        <link href="assets/prova.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <div id="container">
-            <div class="glitch">
-                <div class="svgWrap__svg">
-                    <!-- <img src="assets/Logo_white.svg" alt="LOGO TNL" /> -->
-                    <div class="logo-glitch" id="l1"></div>
-                    <div class="logo-glitch" id="l2"></div>
-                    <div class="logo-glitch" id="l3"></div>
-                    <div class="logo-glitch" id="l4"></div>
-                </div>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Creare effetto GLITCH con CSS</title>
+    <link href="assets/prova.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="container">
+        <div class="glitch">
+            <div class="svgWrap__svg">
+                <!-- <img src="assets/Logo_white.svg" alt="LOGO TNL" /> -->
+                <div class="logo-glitch" id="l1"></div>
+                <div class="logo-glitch" id="l2"></div>
+                <div class="logo-glitch" id="l3"></div>
+                <div class="logo-glitch" id="l4"></div>
             </div>
         </div>
-    </body>
+    </div>
+    <script>
+        window.addEventListener('scroll', () => {
+            document.body.style.setProperty('--scroll', window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
+        }, false);
+    </script>
+</body>
+
 </html>

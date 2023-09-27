@@ -1,6 +1,10 @@
-console.log("tek no logique rules");
-console.log(document.documentElement.clientWidth);
 import * as secp from "https://unpkg.com/@noble/secp256k1"; // Unpkg
+import { links } from "../database/links";
+import { paragraphs } from "../database/pis";
+import { listOfFeatures } from "../database/listOfFeatures";
+import { logoPayoffs } from "../database/logoPayoffs";
+
+let parser = new DOMParser();
 
 class App extends EventTarget {
   constructor() {
@@ -8,6 +12,7 @@ class App extends EventTarget {
     document.documentElement.clientHeight;
   }
 }
+
 class UserInput extends EventTarget {
   constructor(userInput) {
     super();
@@ -45,7 +50,7 @@ const showNostrPopup = () => {
   const visibleSmall =
     "p_f t_20px r_0 m0 fontRoboto bc_red p_1rem2rem br_05rem flex";
   container.setAttribute("class", "none");
-  popup.setAttribute("class", "mr1rem");
+  popup.setAttribute("class", "mr1rem cDark");
   popup.textContent =
     "woo great it seems you have nostr installed, or the Alby extention! thats great!! soon we will have something ready for you!!";
   setTimeout(() => {
@@ -59,6 +64,7 @@ const showNostrPopup = () => {
   container.appendChild(button);
   body.appendChild(container);
 };
+
 const showAboutPage = how => {
   const message = `Tek No Logique Records, since 2001.
 We are an indipendent record label.
@@ -84,6 +90,7 @@ Subscribe for more news`;
     how(message);
   }
 };
+
 const createUl = list => {
   const FONTROBOTO = "fontRoboto";
   const ul = document.createElement("ul");
@@ -101,6 +108,7 @@ const createUl = list => {
   });
   return ul;
 };
+
 const createPis = list => {
   const pis = list.map(e => {
     const pi = document.createElement("p");
@@ -111,114 +119,160 @@ const createPis = list => {
   return pis;
 };
 
-const createLogoPis = list => {
-  const pis = list.map(e => {
-    const pi = document.createElement("p");
-    const FONTROBOTO = "fontRoboto";
-    pi.className = FONTROBOTO;
-    pi.textContent = e;
-    return pi;
-  });
-  return pis;
-};
-const createFooter = () => {
-  const footer = document.createElement("footer");
-  footer.id = "footer";
-  footer.className =
-    "flex flexDirCol fontRoboto cG fsSmall p1rem pc_e w100% box_bor mt10rem";
-  return footer;
+const loadPlayer = (document, element) => {
+  const src = document.createElement("source");
+  src.setAttribute("type", "audio/mpeg");
+  src.setAttribute(
+    "src",
+    "https://audius-dp.amsterdam.creatorseed.com/v1/tracks/DvX88/stream"
+  );
+  src.textContent = "Il tuo browser non supporta l'elemento audio.";
+  element.appendChild(src);
 };
 
-function imgFadeIn(logo, className) {
-  var wh = window.innerHeight || document.documentElement.clientHeight;
-
-  var rect = logo.getBoundingClientRect();
-  var thisPos = rect.top;
-  var topOfWindow = window.scrollY || window.pageYOffset;
-  if (topOfWindow + wh - 200 > thisPos) {
-    logo.className = className;
-  }
-}
-const body = document.getElementById("body");
-const comingSoon = document.getElementsByTagName("p").item(1);
-const button = document.getElementsByTagName("button").item(0);
-const player = document.getElementById("player");
-const playBtn = document.getElementById("play-btn");
-
-window.addEventListener("DOMContentLoaded", () => {
-  const logoPis = createLogoPis([
-    "you can bust the party but you can't stop the vibe",
-    "free party for no drugs people",
-  ]);
-  logoPis.forEach(e => {
-    body.appendChild(e);
+/**
+ * crea lettore audio
+ * @param {document} document
+ */
+const createAudio = document => {
+  const element = document.createElement("audio");
+  element.id = "player";
+  element.addEventListener("loadedmetadata", () => {
+    element.volume = 0.5;
   });
-  const ul = createUl([
-    "music",
-    "vinyl",
-    "merchandise",
-    "collectibles",
-    "tracks download",
-    "mixes download",
-    "loops",
-    "project files",
-    "plug-ins",
-    "streaming",
-    "booking",
-    "chat",
-    "social",
-  ]);
-  body.appendChild(ul);
-  const pis = createPis([
-    "all of which will be built on decentralized technologies cause we believe in true freedom.",
-    "if you are a producer and you are interested in making your music be heard, join us!! links below ⬇️",
-    "if you are a dj and you are interested in finding good music, tracks, loops and make your mixes be heard, join us!! links below ⬇️",
-    "if you are a label and you are interested in rejoining our network and learn out to use our open source tools, join us!! links below ⬇️",
-    "if you are a developer and you are interested in helping us building open source tools, join us!! links below ⬇️",
-  ]);
-  pis.forEach(p => body.appendChild(p));
-  const footer = createFooter();
-  body.appendChild(footer);
-  const logo = document.getElementById("logo");
-  const tnl = document.getElementById("tnl");
-  const INIT_LOGO_CLASS = "w100% mt5rem vis_h";
-  const MUTATED_LOGO_CLASS = "w100% vis_vimp anim_fi1point2s";
-  logo.setAttribute("class", INIT_LOGO_CLASS);
-  const playclass = "fa-solid fa-circle-play fa-lg";
-  const pauseclass = "fa-solid fa-circle-pause fa-lg";
+  loadPlayer(document, element);
+  return element;
+};
+
+/**
+ *
+ * @param {document} document
+ * @param {string} path
+ */
+const createSvg = async (document, path, id, pathcolor) => {
+  let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const data = await (await fetch(path)).text();
+  let svgDoc = parser.parseFromString(data, "image/svg+xml");
+  let elements = svgDoc.querySelectorAll("circle, rect, path");
+  // Aggiungi ogni elemento al tuo elemento SVG
+  elements.forEach(element => {
+    if (element.tagName === "path") {
+      element.setAttribute("fill", pathcolor);
+    }
+    svg.appendChild(element);
+  });
+  svg.id = id;
+  svg.classList.add("w24px");
+  svg.classList.add("h24px");
+  return svg;
+};
+
+/**
+ *
+ * @param {document} document
+ */
+const createPlayIcon = async (document, player) => {
+  // let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  // const data = await (await fetch("./assets/play-btn-black.svg")).text();
+  // let svgDoc = parser.parseFromString(data, "image/svg+xml");
+  // let elements = svgDoc.querySelectorAll("circle, rect, path");
+  // // Aggiungi ogni elemento al tuo elemento SVG
+  // elements.forEach(element => {
+  //   if (element.tagName === "path") {
+  //     element.setAttribute("fill", "white");
+  //   }
+  //   svg.appendChild(element);
+  // });
+  const playbtnsvg = await createSvg(
+    document,
+    "./assets/play-btn-black.svg",
+    "play-btn",
+    "white"
+  );
+  const pausebtnsvg = await createSvg(
+    document,
+    "./assets/pause-btn-black.svg",
+    "pause-btn",
+    "white"
+  );
+  const button = document.createElement("div");
+  button.appendChild(playbtnsvg);
+  button.className = "cur_p ps_end p_f w_fc r_1rem t_calc1 w24px h24px";
+  button.addEventListener("click", e => {
+    const parent = e.target.parentNode;
+    console.log(parent.firstChild.id);
+    if (parent.firstChild.id === "play-btn") {
+      parent.removeChild(parent.firstChild);
+      parent.appendChild(pausebtnsvg);
+      player.play();
+    } else {
+      parent.removeChild(parent.firstChild);
+      parent.appendChild(playbtnsvg);
+      player.pause();
+    }
+  });
+  // const play = document.createElement("img");
+  // play.id = "play-btn";
+  // play.src = "assets/play-btn-black.svg";
+  // const playclass = "none";
+  // const pauseclass = "fa-solid fa-circle-pause fa-lg";
+
+  // const map = new Map().set(true, pauseclass).set(false, playclass);
+  // const mapstate = new Map()
+  //   .set(false, () => player.play())
+  //   .set(true, () => player.pause());
+  // // player.setAttribute("controls", "true");
+  // play.setAttribute("class", `${map.get(false)} `);
+  // play.addEventListener("click", e => {
+  //   const condition = e.target.className.includes(pauseclass);
+  //   e.target.setAttribute("class", `${map.get(!condition)} `);
+  //   mapstate.get(condition)();
+  // });
+  return button;
+};
+
+/**
+ *
+ * @param {document} document
+ */
+const createMainContainer = document => {
+  const container = document.createElement("div");
+  container.id = "main-container";
+  container.className = "flex flexWrap flexDirCol w100% pc_c mb5rem";
+  return container;
+};
+
+/**
+ * crea il titolo TNL
+ * @param {document} document
+ */
+const createTNL = document => {
+  const h1 = document.createElement("h1");
+  h1.id = "tnl";
+  h1.className = "fs4rem p0 m0 mt20vh";
+  h1.textContent = "Tek No Logique";
   const tnlclasssmall = "fs4rem p0 m0 mt20vh";
   const tnlclassbig = "fs8rem p0 m0 mt20vh";
-
-  window.addEventListener("scroll", function () {
-    imgFadeIn(logo, MUTATED_LOGO_CLASS);
-  });
-
-  window.addEventListener("resize", function () {
-    imgFadeIn(logo, INIT_LOGO_CLASS);
-  });
   if (document.documentElement.clientWidth > 1200) {
-    tnl.className = tnlclassbig;
+    h1.className = tnlclassbig;
   } else {
-    tnl.className = tnlclasssmall;
+    h1.className = tnlclasssmall;
   }
-  const map = new Map().set(true, pauseclass).set(false, playclass);
-  const mapstate = new Map()
-    .set(false, () => player.play())
-    .set(true, () => player.pause());
-  // player.setAttribute("controls", "true");
-  playBtn.setAttribute(
-    "class",
-    `${map.get(false)} cur_p ps_end p_f w_fc r_1rem t_calc1`
-  );
-  playBtn.addEventListener("click", e => {
-    const condition = e.target.className.includes(pauseclass);
-    e.target.setAttribute(
-      "class",
-      `${map.get(!condition)} cur_p ps_end p_f w_fc r_1rem t_calc1`
-    );
-    mapstate.get(condition)();
-  });
+  return h1;
+};
 
+/**
+ * crea l'elemento coming soon
+ * @param {document} document
+ */
+const createComingSoon = document => {
+  const container = document.createElement("div");
+  container.className = "flex flexWrap pc_c";
+  const comingsoontext = document.createElement("p");
+  comingsoontext.className = "fontRoboto";
+  comingsoontext.textContent = "coming soon";
+  const comingsoonpoint = document.createElement("p");
+  comingsoonpoint.className = "fontRoboto w20px taL";
   const texts = [`   `, `.  `, `.. `, `...`];
   let index = 0;
   setInterval(() => {
@@ -226,8 +280,25 @@ window.addEventListener("DOMContentLoaded", () => {
     if (index === texts.length) {
       index = 0;
     }
-    comingSoon.textContent = texts[index];
+    comingsoonpoint.textContent = texts[index];
   }, 350);
+  container.appendChild(comingsoontext);
+  container.appendChild(comingsoonpoint);
+  return container;
+};
+
+/**
+ * crea call to action
+ * @param {document} document
+ */
+const createCallToAction = document => {
+  const container = document.createElement("div");
+  container.id = "call-to-action";
+  container.className = "flex flexWrap pc_c";
+  const button = document.createElement("button");
+  button.textContent = "NEWS, PLEASE!!";
+  container.appendChild(button);
+
   button.addEventListener("click", () => {
     const askToSubscribe = () => {
       const answer = window.prompt(
@@ -240,20 +311,25 @@ window.addEventListener("DOMContentLoaded", () => {
       `;
       window.confirm(message);
     };
+    const answer = askToSubscribe();
     try {
-      new UserInput(promptWip())
+      new UserInput(answer)
         .sanitizeEmail(answer => {
+          console.log(validator.isEmail(answer));
           if (answer === null) {
             throw Error("rejected");
+          } else if (!validator.isEmail(answer)) {
+            window.alert("You Must input a valid email");
           } else return answer;
         })
         .encryptEmail(sanitizedInput => {
           return sanitizedInput;
         })
         .send(ecryptedInput => {
+          fetch(`/subscribe?m=${ecryptedInput}`);
           try {
             window.confirm(
-              `thank you for subscribing with this address: ${answer}`
+              `thank you for subscribing with this address: ${ecryptedInput}`
             );
             return true;
           } catch (error) {
@@ -264,194 +340,119 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log(error);
     }
   });
-  const links = [
-    {
-      href: "https://example.com",
-      id: "about",
-      target: "_blank",
-      text: "about",
-    },
-    {
-      href: "https://t.me/+gm8R7BbWmIRjMGM8",
-      id: "tg-group",
-      target: "_blank",
-      text: "TNL Dao Channel",
-    },
-    {
-      href: "https://t.me/+4HwnT5UaX9w4Yjc0",
-      id: "tg-prod-group",
-      target: "_blank",
-      text: "TNL Producers Group",
-    },
-    {
-      href: "https://audius.co/teknologique",
-      id: "audius",
-      target: "_blank",
-      text: "audius",
-    },
-    {
-      href: "https://gnosisscan.io/address/0xaf9b539cf6689c2d39e29e4dfe4debcf3ab43176",
-      id: "dao-gnosis",
-      target: "_blank",
-      text: "dao on gnosis",
-    },
-    {
-      href: "https://teknologique.bandcamp.com/",
-      id: "bandcamp",
-      target: "_blank",
-      text: "bandcamp",
-    },
-    {
-      href: "https://discord.gg/gNFQ3Us",
-      id: "discord",
-      target: "_blank",
-      text: "discord",
-    },
-  ];
+  return container;
+};
 
-  links
-    .map(data => {
-      const a = document.createElement("a");
-      a.setAttribute("target", data.target);
-      a.setAttribute("id", data.id);
-      a.setAttribute("href", data.href);
-      a.textContent = data.text;
-      return a;
-    })
-    .forEach(e => footer.appendChild(e));
+/**
+ * crea l'elemento logo
+ * @param {document} document
+ */
+const createLogo = document => {
+  const INIT_LOGO_CLASS = "w100% mt5rem vis_h";
+  const MUTATED_LOGO_CLASS = "w100% vis_vimp anim_fi1point2s";
+  const image = document.createElement("img");
+  image.src = "./assets/Logo_white.svg";
+  image.id = "logo";
+  image.className = INIT_LOGO_CLASS;
+  window.addEventListener("scroll", function () {
+    imgFadeIn(logo, MUTATED_LOGO_CLASS);
+  });
 
-  const about = document.getElementById("about");
-  about.addEventListener("click", e => {
-    e.preventDefault();
-    showAboutPage(message => {
-      window.confirm(message);
+  window.addEventListener("resize", function () {
+    imgFadeIn(logo, INIT_LOGO_CLASS);
+  });
+  return image;
+};
+
+const createLogoPis = list => {
+  const pis = list.map(e => {
+    const pi = document.createElement("p");
+    const FONTROBOTO = "fontRoboto";
+    pi.className = FONTROBOTO;
+    pi.textContent = e;
+    return pi;
+  });
+  return pis;
+};
+
+const createFooter = () => {
+  const footer = document.createElement("footer");
+  footer.id = "footer";
+  footer.className =
+    "flex flexDirCol fontRoboto cG fsSmall p1rem pc_e w100% box_bor mt10rem";
+  return footer;
+};
+
+function imgFadeIn(logo, className) {
+  var wh = window.innerHeight || document.documentElement.clientHeight;
+  var rect = logo.getBoundingClientRect();
+  var thisPos = rect.top;
+  var topOfWindow = window.scrollY || window.pageYOffset;
+  if (topOfWindow + wh - 200 > thisPos) {
+    logo.className = className;
+  }
+}
+
+/**
+ *
+ * @param {HTMLElement} element
+ * @param {HTMLElement[]} nodes
+ */
+const appendChildren = (element, nodes) => {
+  nodes.forEach(e => {
+    element.appendChild(e);
+  });
+};
+
+const body = document.getElementById("body");
+
+window.addEventListener("DOMContentLoaded", async () => {
+  const audio = createAudio(document);
+  body.appendChild(audio);
+  const playicon = await createPlayIcon(document, audio);
+  console.log(playicon);
+  body.appendChild(playicon);
+  const maincontainer = createMainContainer(document);
+  const teknologique = createTNL(document);
+  maincontainer.appendChild(teknologique);
+  const comingsoon = createComingSoon(document);
+  maincontainer.appendChild(comingsoon);
+  const calltoaction = createCallToAction(document);
+  maincontainer.appendChild(calltoaction);
+  body.appendChild(maincontainer);
+  const newlogo = createLogo(document);
+  body.appendChild(newlogo);
+  newlogo.addEventListener("load", () => {
+    const logoPis = createLogoPis(logoPayoffs);
+    logoPis.forEach(e => {
+      body.appendChild(e);
+    });
+    const ul = createUl(listOfFeatures);
+    body.appendChild(ul);
+    const pis = createPis(paragraphs);
+    pis.forEach(p => body.appendChild(p));
+    const footer = createFooter();
+    body.appendChild(footer);
+
+    links
+      .map(data => {
+        const a = document.createElement("a");
+        a.setAttribute("target", data.target);
+        a.setAttribute("id", data.id);
+        a.setAttribute("href", data.href);
+        a.textContent = data.text;
+        return a;
+      })
+      .forEach(e => footer.appendChild(e));
+
+    const about = document.getElementById("about");
+    about.addEventListener("click", e => {
+      e.preventDefault();
+      showAboutPage(message => {
+        window.confirm(message);
+      });
     });
   });
-  const loadPlayer = () => {
-    const src = document.createElement("source");
-    src.setAttribute("type", "audio/mpeg");
-    src.setAttribute(
-      "src",
-      "https://audius-dp.amsterdam.creatorseed.com/v1/tracks/DvX88/stream"
-    );
-    src.textContent = "Il tuo browser non supporta l'elemento audio.";
-    player.appendChild(src);
-  };
-  player.addEventListener("loadedmetadata", () => {
-    player.volume = 0.5;
-    console.log("loaded");
-    console.log(player.volume);
-  });
-  loadPlayer();
-
-  function hexStringToUint8Array(hexString) {
-    const length = hexString.length / 2;
-    const uint8Array = new Uint8Array(length);
-
-    for (let i = 0; i < length; i++) {
-      const byteValue = parseInt(hexString.substr(i * 2, 2), 16);
-      uint8Array[i] = byteValue;
-    }
-
-    return uint8Array;
-  }
-
-  const bufferToHex = buffer => {
-    return Array.from(buffer)
-      .map(byte => byte.toString(16).padStart(2, "0"))
-      .join("");
-  };
-
-  const makePrivateAndPublicKeys = secp => {
-    const sk = secp.utils.randomPrivateKey();
-    const pk = secp.getPublicKey(sk);
-    if (!secp.utils.isValidPrivateKey(sk))
-      throw new Error(
-        "There was a problem while generating the key which was not valid"
-      );
-    return { sk, pk };
-  };
-
-  const createIV = () => {
-    return crypto.getRandomValues(new Uint8Array(16));
-  };
-
-  const convertSecret = async secret => {
-    return await window.crypto.subtle.importKey(
-      "raw",
-      secret,
-      "AES-CBC",
-      false,
-      ["encrypt", "decrypt"]
-    );
-  };
-
-  const encryptData = async (text, convertedSecret, iv) => {
-    return await window.crypto.subtle.encrypt(
-      {
-        name: "AES-CBC",
-        iv: iv,
-      },
-      convertedSecret,
-      new TextEncoder().encode(text)
-    );
-  };
-
-  const makesomething = secp => {
-    const { pk: pk1, sk: sk1 } = makePrivateAndPublicKeys(secp);
-    const { pk: pk2, sk: sk2 } = makePrivateAndPublicKeys(secp);
-    console.log(bufferToHex(sk1));
-    console.log(bufferToHex(pk1));
-    const isValid = secp.utils.isValidPrivateKey(sk1);
-    console.log(isValid);
-  };
-
-  const nostrTools = tools => {
-    const {
-      validateEvent,
-      verifySignature,
-      getSignature,
-      getEventHash,
-      getPublicKey,
-      relayInit,
-      generatePrivateKey,
-    } = tools;
-
-    const signEvent = (
-      { kind, created_at, tags, content, pubkey },
-      getEventHash,
-      getSignature,
-      validateEvent,
-      verifySignature
-    ) => {
-      let event = {
-        kind,
-        created_at,
-        tags,
-        content,
-        pubkey,
-      };
-
-      event.id = getEventHash(event);
-      event.sig = getSignature(event, privateKey);
-
-      let ok = validateEvent(event);
-      let veryOk = verifySignature(event);
-      if (!ok || !veryOk) throw new Error("not good in signEvent");
-      return event;
-    };
-  };
-  // makesomething(secp);
-  const TNLPUB =
-    "49fd86bcb4f59963a2eea88449b46716cc606b53be62b13cd450a7ee9cbd92fc";
-  const SEC = process.env.SEC;
-  const PUB = process.env.PUB;
-  console.log(SEC);
-  console.log(PUB);
-  const isValid = secp.utils.isValidPrivateKey(SEC);
-  const condition = window.NostrTools !== undefined;
-  console.log(condition);
-  if (condition) nostrTools(window.NostrTools);
 });
 
 // prova fine

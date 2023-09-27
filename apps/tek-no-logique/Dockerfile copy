@@ -1,0 +1,27 @@
+# Usa un'immagine base leggera di Linux
+FROM oven/bun:latest as builder
+
+# Dichiara ambiente
+ENV NODE_ENV=production
+
+# Aggiorna il sistema
+RUN apk update
+
+# Copia i file sorgente nella directory del builder
+WORKDIR /src
+COPY . .
+
+# aggiorna package.json
+RUN bun script/build.js
+
+# Installa le dipendenze e esegui il comando yarn build per compilare i file
+RUN bun install
+
+# build internal packs
+RUN bun script/build_internals
+
+# build app
+RUN bun run build
+
+# Avvia server quando il contenitore viene eseguito
+CMD ["bun", "--hot", "server.js"]
