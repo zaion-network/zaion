@@ -28,13 +28,14 @@ export const sendFileResponse = async (
   key: SimpleServer.Header.HeaderKeys,
   type: SimpleServer.Header.ContentTypeValues,
   path: string,
-  fallback: (headers: Headers) => Response = (headers) => {
-    if (type === SimpleServer.Header.ContentTypeValues.TEXT_HTML) {
+  fallback: (headers: Headers) => Promise<Response> = async headers => {
+    const { TEXT_JAVASCRIPT, TEXT_HTML, TEXT_CSS } =
+      SimpleServer.Header.ContentTypeValues;
+    if (type === TEXT_HTML) {
       return new Response(defaultHtml, { headers });
-    } else if (type === SimpleServer.Header.ContentTypeValues.TEXT_JAVASCRIPT)
+    } else if (type === TEXT_JAVASCRIPT)
       return new Response(defaultJs, { headers });
-    else if (type === SimpleServer.Header.ContentTypeValues.TEXT_CSS)
-      return new Response(defaultCss, { headers });
+    else if (type === TEXT_CSS) return new Response(defaultCss, { headers });
     return new Response("oh mamma");
   }
 ) => {

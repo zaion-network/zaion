@@ -3,6 +3,6 @@
 const res = await Bun.build({
   entrypoints: ["./src/index.ts"],
   outdir: "dist",
-  target: "bun"
+  target: "node",
 });
 console.log(res);

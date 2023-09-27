@@ -7,7 +7,8 @@
   "author": "Giacomo Gagliano <giacomo.gagliano@me.com>",
   "license": "MIT",
   "scripts": {
-    "build": "./build.ts"
+    "dev": "bun build --watch ./src/index.js --outdir ./dist --target node",
+    "build": "bun build ./src/index.js --outdir ./dist --target node"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.3",
