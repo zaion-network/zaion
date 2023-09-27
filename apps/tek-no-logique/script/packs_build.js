@@ -1,6 +1,9 @@
 import { App } from "./App";
 import { app } from "./build";
 
+const map = new Map();
+map.set();
+
 const hpackagebuildstarted = adaptedDeps => {
   console.log(adaptedDeps);
   // console.log("bumbala");
